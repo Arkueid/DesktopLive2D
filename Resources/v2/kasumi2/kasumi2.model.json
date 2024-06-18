@@ -11,14 +11,16 @@
             {
                 "file": "live2d/001_live_event_47_ssr_angry01.mtn",
                 "fade_in": 2000,
-                "fade_out": 2000
+                "fade_out": 2000,
+                "sound": ""
             }
         ],
         "bye01": [
             {
                 "file": "live2d/001_live_event_47_ssr_bye01.mtn",
                 "fade_in": 2000,
-                "fade_out": 2000
+                "fade_out": 2000,
+                "sound": ""
             }
         ],
         "cry01": [
@@ -33,252 +35,288 @@
             {
                 "file": "live2d/001_live_event_47_ssr_cry02.mtn",
                 "fade_in": 2000,
-                "fade_out": 2000
+                "fade_out": 2000,
+                "sound": ""
             }
         ],
         "cry03": [
             {
                 "file": "live2d/001_live_event_47_ssr_cry03.mtn",
                 "fade_in": 2000,
-                "fade_out": 2000
+                "fade_out": 2000,
+                "sound": ""
             }
         ],
         "eeto01": [
             {
                 "file": "live2d/001_live_event_47_ssr_eeto01.mtn",
                 "fade_in": 2000,
-                "fade_out": 2000
+                "fade_out": 2000,
+                "sound": ""
             }
         ],
         "gattsu01": [
             {
                 "file": "live2d/001_live_event_47_ssr_gattsu01.mtn",
                 "fade_in": 2000,
-                "fade_out": 2000
+                "fade_out": 2000,
+                "sound": ""
             }
         ],
         "hukumi01": [
             {
                 "file": "live2d/001_live_event_47_ssr_hukumi01.mtn",
                 "fade_in": 2000,
-                "fade_out": 2000
+                "fade_out": 2000,
+                "sound": ""
             }
         ],
         "idle01": [
             {
                 "file": "live2d/001_live_event_47_ssr_idle01.mtn",
                 "fade_in": 2000,
-                "fade_out": 2000
+                "fade_out": 2000,
+                "sound": ""
             }
         ],
         "idle02": [
             {
                 "file": "live2d/001_live_event_47_ssr_idle02.mtn",
                 "fade_in": 2000,
-                "fade_out": 2000
+                "fade_out": 2000,
+                "sound": ""
             }
         ],
         "jaan01": [
             {
                 "file": "live2d/001_live_event_47_ssr_jaan01.mtn",
                 "fade_in": 2000,
-                "fade_out": 2000
+                "fade_out": 2000,
+                "sound": ""
             }
         ],
         "kime01": [
             {
                 "file": "live2d/001_live_event_47_ssr_kime01.mtn",
                 "fade_in": 2000,
-                "fade_out": 2000
+                "fade_out": 2000,
+                "sound": ""
             }
         ],
         "nf01": [
             {
                 "file": "live2d/001_live_event_47_ssr_nf01.mtn",
                 "fade_in": 2000,
-                "fade_out": 2000
+                "fade_out": 2000,
+                "sound": ""
             }
         ],
         "nf02": [
             {
                 "file": "live2d/001_live_event_47_ssr_nf02.mtn",
                 "fade_in": 2000,
-                "fade_out": 2000
+                "fade_out": 2000,
+                "sound": ""
             }
         ],
         "nf03": [
             {
                 "file": "live2d/001_live_event_47_ssr_nf03.mtn",
                 "fade_in": 2000,
-                "fade_out": 2000
+                "fade_out": 2000,
+                "sound": ""
             }
         ],
         "nf04": [
             {
                 "file": "live2d/001_live_event_47_ssr_nf04.mtn",
                 "fade_in": 2000,
-                "fade_out": 2000
+                "fade_out": 2000,
+                "sound": ""
             }
         ],
         "nf05": [
             {
                 "file": "live2d/001_live_event_47_ssr_nf05.mtn",
                 "fade_in": 2000,
-                "fade_out": 2000
+                "fade_out": 2000,
+                "sound": ""
             }
         ],
         "left01": [
             {
                 "file": "live2d/001_live_event_47_ssr_nf_left01.mtn",
                 "fade_in": 2000,
-                "fade_out": 2000
+                "fade_out": 2000,
+                "sound": ""
             }
         ],
         "right01": [
             {
                 "file": "live2d/001_live_event_47_ssr_nf_right01.mtn",
                 "fade_in": 2000,
-                "fade_out": 2000
+                "fade_out": 2000,
+                "sound": ""
             }
         ],
         "niyaniya01": [
             {
                 "file": "live2d/001_live_event_47_ssr_niyaniya01.mtn",
                 "fade_in": 2000,
-                "fade_out": 2000
+                "fade_out": 2000,
+                "sound": ""
             }
         ],
         "oowarai01": [
             {
                 "file": "live2d/001_live_event_47_ssr_oowarai01.mtn",
                 "fade_in": 2000,
-                "fade_out": 2000
+                "fade_out": 2000,
+                "sound": ""
             }
         ],
         "sad01": [
             {
                 "file": "live2d/001_live_event_47_ssr_sad01.mtn",
                 "fade_in": 2000,
-                "fade_out": 2000
+                "fade_out": 2000,
+                "sound": ""
             }
         ],
         "sad02": [
             {
                 "file": "live2d/001_live_event_47_ssr_sad02.mtn",
                 "fade_in": 2000,
-                "fade_out": 2000
+                "fade_out": 2000,
+                "sound": ""
             }
         ],
         "serious01": [
             {
                 "file": "live2d/001_live_event_47_ssr_serious01.mtn",
                 "fade_in": 2000,
-                "fade_out": 2000
+                "fade_out": 2000,
+                "sound": ""
             }
         ],
         "serious02": [
             {
                 "file": "live2d/001_live_event_47_ssr_serious02.mtn",
                 "fade_in": 2000,
-                "fade_out": 2000
+                "fade_out": 2000,
+                "sound": ""
             }
         ],
         "shame01": [
             {
                 "file": "live2d/001_live_event_47_ssr_shame01.mtn",
                 "fade_in": 2000,
-                "fade_out": 2000
+                "fade_out": 2000,
+                "sound": ""
             }
         ],
         "sing01": [
             {
                 "file": "live2d/001_live_event_47_ssr_sing01.mtn",
                 "fade_in": 2000,
-                "fade_out": 2000
+                "fade_out": 2000,
+                "sound": ""
             }
         ],
         "sleep01": [
             {
                 "file": "live2d/001_live_event_47_ssr_sleep01.mtn",
                 "fade_in": 2000,
-                "fade_out": 2000
+                "fade_out": 2000,
+                "sound": ""
             }
         ],
         "sleep02": [
             {
                 "file": "live2d/001_live_event_47_ssr_sleep02.mtn",
                 "fade_in": 2000,
-                "fade_out": 2000
+                "fade_out": 2000,
+                "sound": ""
             }
         ],
         "smile01": [
             {
                 "file": "live2d/001_live_event_47_ssr_smile01.mtn",
                 "fade_in": 2000,
-                "fade_out": 2000
+                "fade_out": 2000,
+                "sound": ""
             }
         ],
         "smile02": [
             {
                 "file": "live2d/001_live_event_47_ssr_smile02.mtn",
                 "fade_in": 2000,
-                "fade_out": 2000
+                "fade_out": 2000,
+                "sound": ""
             }
         ],
         "smile03": [
             {
                 "file": "live2d/001_live_event_47_ssr_smile03.mtn",
                 "fade_in": 2000,
-                "fade_out": 2000
+                "fade_out": 2000,
+                "sound": ""
             }
         ],
         "smile04": [
             {
                 "file": "live2d/001_live_event_47_ssr_smile04.mtn",
                 "fade_in": 2000,
-                "fade_out": 2000
+                "fade_out": 2000,
+                "sound": ""
             }
         ],
         "sneeze01": [
             {
                 "file": "live2d/001_live_event_47_ssr_sneeze01.mtn",
                 "fade_in": 2000,
-                "fade_out": 2000
+                "fade_out": 2000,
+                "sound": ""
             }
         ],
         "sneeze02": [
             {
                 "file": "live2d/001_live_event_47_ssr_sneeze02.mtn",
                 "fade_in": 2000,
-                "fade_out": 2000
+                "fade_out": 2000,
+                "sound": ""
             }
         ],
         "surprised01": [
             {
                 "file": "live2d/001_live_event_47_ssr_surprised01.mtn",
                 "fade_in": 2000,
-                "fade_out": 2000
+                "fade_out": 2000,
+                "sound": ""
             }
         ],
         "surprised02": [
             {
                 "file": "live2d/001_live_event_47_ssr_surprised02.mtn",
                 "fade_in": 2000,
-                "fade_out": 2000
+                "fade_out": 2000,
+                "sound": ""
             }
         ],
         "surprised03": [
             {
                 "file": "live2d/001_live_event_47_ssr_surprised03.mtn",
                 "fade_in": 2000,
-                "fade_out": 2000
+                "fade_out": 2000,
+                "sound": ""
             }
         ],
         "wink01": [
             {
                 "file": "live2d/001_live_event_47_ssr_wink01.mtn",
                 "fade_in": 2000,
-                "fade_out": 2000
+                "fade_out": 2000,
+                "sound": ""
             }
         ]
     },
