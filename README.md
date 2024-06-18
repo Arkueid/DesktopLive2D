@@ -17,6 +17,8 @@
 
 **注：由于目前找到的 Cubism OpenGL 2.0 SDK 的 live2d_opengl.lib 静态库只有 32 位，加载 2.0 版本的模型只能使用 32 位。**
 
+=>[C++ 版本（旧版）](https://github.com/Arkueid/Live2DMascot/tree/master)
+
 ## 预览
 
 2.0 版本模型：
