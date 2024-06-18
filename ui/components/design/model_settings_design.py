@@ -4,9 +4,9 @@ from config.configuration import Configuration
 from ui.components.design.base_designs import ScrollDesign
 from ui.components.motion_editor import MotionEditor
 from ui.components.setting_cards import *
+from ui.components.design.icon_design import IconDesign
 
-
-class ModelSettingsDesign(ScrollDesign):
+class ModelSettingsDesign(ScrollDesign, IconDesign):
 
     def __init__(self, config: Configuration):
         super().__init__()
@@ -22,6 +22,3 @@ class ModelSettingsDesign(ScrollDesign):
         self.vBoxLayout.addWidget(self.card_changeModel)
         self.vBoxLayout.addWidget(expandable)
         self.vBoxLayout.addStretch(1)
-
-    def icon(self, path):
-        return QIcon(os.path.join(self.resource_dir, path))

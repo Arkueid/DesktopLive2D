@@ -86,12 +86,10 @@ class Model(Scene.CallBackSet):
             del self.model
 
         self.model = live2d.LAppModel()
-        if live2d.LIVE2D_VERSION == 2:
-            self.model.LoadModelJson("./Resources/kasumi2/model.json")
-        else:
-            self.model.LoadModelJson(
-                os.path.join(self.config.resource_dir.value, self.config.model_name.value, self.config.model_name.value + settings.MODEL_JSON_SUFFIX)
-            )
+
+        self.model.LoadModelJson(
+            os.path.join(self.config.resource_dir.value, self.config.model_name.value, self.config.model_name.value + settings.MODEL_JSON_SUFFIX)
+        )
 
         self.motionFinished = True
 

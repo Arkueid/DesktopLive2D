@@ -1,16 +1,15 @@
-from enum import Enum
-
 from qfluentwidgets import ConfigItem, QConfig, RangeConfigItem, RangeValidator, BoolValidator, qconfig
 
 from utils.model3json import Model3Json
 
+from app import settings, define
 
 class Configuration(QConfig):
     model_list: list = list()
     model3Json: Model3Json = Model3Json()
 
-    model_name: ConfigItem = ConfigItem("model", "name", "Hiyori")
-    resource_dir: ConfigItem = ConfigItem("model", "resource_dir", "Resources")
+    model_name: ConfigItem = ConfigItem("model", "name", "Hiyori" if settings.LIVE2D_VERSION == define.Live2DVersion.V3 else "kasumi2")
+    resource_dir: ConfigItem = ConfigItem("model", "resource_dir", "Resources/v3" if settings.LIVE2D_VERSION == define.Live2DVersion.V3 else "Resources/v2")
     motion_interval: RangeConfigItem = RangeConfigItem("model", "motion_interval", 10, RangeValidator(5, 86400))
     auto_repair: ConfigItem = ConfigItem("model", "auto_repair", False, BoolValidator())
     drawX: RangeConfigItem = RangeConfigItem("model", "drawX", 0.0, RangeValidator(-2.0, 2.0))

@@ -42,6 +42,10 @@ def clearBuffer() -> None:
     pass
 
 
+def setLogEnable(enable: bool):
+    pass
+
+
 class LAppModel:
     
     def __init__(self):

@@ -10,9 +10,10 @@ from ui.components.app_settings import AppSettings
 from ui.components.model_settings import ModelSettings
 
 from qfluentwidgets import FluentWindow
+from ui.components.design.icon_design import IconDesign
 
 
-class Settings(FluentWindow):
+class Settings(FluentWindow, IconDesign):
     appSettings: AppSettings
     modelSettings: ModelSettings
     apiSettings: ApiSettings
@@ -47,6 +48,3 @@ class Settings(FluentWindow):
         self.setVisible(True)
         self.adjustSize()
         self.setMicaEffectEnabled(True)
-
-    def icon(self, path):
-        return QIcon(os.path.join(self.resource_dir, path))

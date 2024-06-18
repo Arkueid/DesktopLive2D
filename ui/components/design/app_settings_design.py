@@ -4,9 +4,10 @@ from qfluentwidgets import *
 from config.configuration import Configuration
 from ui.components.design.base_designs import ScrollDesign
 from ui.components.setting_cards import *
+from ui.components.design.icon_design import IconDesign
 
 
-class AppSettingsDesign(ScrollDesign):
+class AppSettingsDesign(ScrollDesign, IconDesign):
 
     def __init__(self, config: Configuration):
         super().__init__()
@@ -39,8 +40,5 @@ class AppSettingsDesign(ScrollDesign):
         self.vBoxLayout.addWidget(self.card_scale)
         self.vBoxLayout.addWidget(self.card_volume)
         # self.vBoxLayout.addWidget(self.card_auto_repair)
-
-    def icon(self, path):
-        return QIcon(os.path.join(self.resource_dir, path))
 
 

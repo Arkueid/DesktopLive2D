@@ -1,13 +1,15 @@
 import json
 import os.path
 
+from app import settings, define
+
 
 class Key:
     FILE_REFERENCES = "FileReferences"
-    MOTIONS = "Motions"
-    FILE = "File"
-    SOUND = "Sound"
-    TEXT = "Text"
+    MOTIONS = "Motions" if settings.LIVE2D_VERSION == define.Live2DVersion.V3 else "motions"
+    FILE = "File" if settings.LIVE2D_VERSION == define.Live2DVersion.V3 else "file"
+    SOUND = "Sound" if settings.LIVE2D_VERSION == define.Live2DVersion.V3 else "sound"
+    TEXT = "Text" if settings.LIVE2D_VERSION == define.Live2DVersion.V3 else "sound"
 
 
 class Motion:
@@ -107,13 +109,15 @@ class Model3Json:
         self.__meta = d
 
     def motion_groups(self) -> MotionGroups:
-        return MotionGroups(self.__meta[Key.FILE_REFERENCES][Key.MOTIONS])
+        if settings.LIVE2D_VERSION == define.Live2DVersion.V2:
+            return MotionGroups(self.__meta[Key.MOTIONS])
+        else:
+            return MotionGroups(self.__meta[Key.FILE_REFERENCES][Key.MOTIONS])
 
     def src_dir(self):
         return self.__src_dir
 
     def load(self, fileName):
-        d = None
         with open(fileName, 'r', encoding='utf-8') as f:
             self.__meta = json.loads(f.read())
         self.__src_file = fileName
