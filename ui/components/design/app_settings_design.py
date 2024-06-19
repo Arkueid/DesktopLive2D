@@ -1,10 +1,7 @@
-import os
-from qfluentwidgets import *
-
 from config.configuration import Configuration
 from ui.components.design.base_designs import ScrollDesign
-from ui.components.setting_cards import *
 from ui.components.design.icon_design import IconDesign
+from ui.components.setting_cards import *
 
 
 class AppSettingsDesign(ScrollDesign, IconDesign):

@@ -14,6 +14,7 @@ class FlyoutText(QWidget):
 
     def __init__(self, config: Configuration, parent):
         super().__init__(parent)
+        self.shadowEffect = None
         self.view = FlyoutView("", "d")
         self.config = config
         self.fadeOutAni = None
@@ -36,7 +37,6 @@ class FlyoutText(QWidget):
         self.shadowEffect.setBlurRadius(blurRadius)
         self.shadowEffect.setOffset(*offset)
         self.shadowEffect.setColor(color)
-        self.view.setGraphicsEffect(None)
         self.view.setGraphicsEffect(self.shadowEffect)
 
     def closeEvent(self, e):
@@ -57,7 +57,7 @@ class FlyoutText(QWidget):
         self.view._adjustText()
         self.show()
         self.move(self.config.lastX.value + self.config.width.value // 2 - self.width() // 2,
-            self.config.lastY.value - self.height() - 10)
+                  self.config.lastY.value - self.height() - 10)
         self.activateWindow()
 
     def fadeOut(self):

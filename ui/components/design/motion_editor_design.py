@@ -13,8 +13,8 @@ from qfluentwidgets import TreeWidget, TextEdit, BodyLabel, RoundMenu, Dialog, \
 
 
 class MotionEditorDesign(QWidget):
-    data: MotionGroups
-    model_dir: str
+    data: MotionGroups | None
+    model_dir: str | None
     playMotionFunc: callable
 
     def __init__(self, model3Json: Model3Json):
@@ -50,11 +50,11 @@ class MotionEditorDesign(QWidget):
 
         splitter.setSizes([300, 600])
 
-    def populate_tree(self, data: Model3Json=None):
+    def populate_tree(self, data: Model3Json = None):
         if data is not None:
             self.data = data.motion_groups()
             self.model_dir = data.src_dir()
-        
+
         self.tree.clear()
         for category, motions in self.data:
             category_item = QTreeWidgetItem(self.tree, [category])
@@ -102,7 +102,8 @@ class MotionEditorDesign(QWidget):
             sender.setText(s1)
             motion.set_file(s1)
 
-    def clear_file(self, sender, motion: Motion):
+    @staticmethod
+    def clear_file(sender, motion: Motion):
         sender.setText("")
         motion.set_file("")
 
@@ -113,7 +114,8 @@ class MotionEditorDesign(QWidget):
             sender.setText(s1)
             motion.set_sound(s1)
 
-    def clear_sound(self, sender, motion: Motion):
+    @staticmethod
+    def clear_sound(sender, motion: Motion):
         sender.setText("")
         motion.set_sound("")
 
@@ -126,7 +128,7 @@ class MotionEditorDesign(QWidget):
     def open_menu(self, position):
         item = self.tree.itemAt(position)
         menu = RoundMenu()
-        menu.setShadowEffect(offset=(0,0))
+        menu.setShadowEffect(offset=(0, 0))
 
         if not item:  # container
             add_action = Action("添加组", self)
@@ -151,7 +153,8 @@ class MotionEditorDesign(QWidget):
                 menu.addAction(add_action)
 
                 play_action = Action("播放动作", self)
-                play_action.triggered.connect(lambda: self.playMotionFunc(item.parent().text(0), item.parent().indexOfChild(item)))
+                play_action.triggered.connect(
+                    lambda: self.playMotionFunc(item.parent().text(0), item.parent().indexOfChild(item)))
                 menu.addAction(play_action)
 
                 delete_action = Action("删除动作", self)
@@ -203,6 +206,6 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     m = Model3Json()
     m.load("../../Resources/Haru/Haru.model3.json")
-    window = MotionEditorDesign(m.motion_groups())
+    window = MotionEditorDesign(m)
     window.show()
     sys.exit(app.exec())

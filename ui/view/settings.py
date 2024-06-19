@@ -1,16 +1,12 @@
-import os
-
 from PySide2.QtCore import Qt
-from PySide2.QtGui import QIcon
 from PySide2.QtWidgets import QApplication
+from qfluentwidgets import FluentWindow
 
 from config import Configuration
 from ui.components.api_settings import ApiSettings
 from ui.components.app_settings import AppSettings
-from ui.components.model_settings import ModelSettings
-
-from qfluentwidgets import FluentWindow
 from ui.components.design.icon_design import IconDesign
+from ui.components.model_settings import ModelSettings
 
 
 class Settings(FluentWindow, IconDesign):

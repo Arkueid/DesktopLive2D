@@ -3,3 +3,4 @@ testenv
 *.zip
 *.rar
 *.tar.gz
+.idea

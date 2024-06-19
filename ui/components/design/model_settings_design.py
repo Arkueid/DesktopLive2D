@@ -1,17 +1,19 @@
-import os
-
 from config.configuration import Configuration
 from ui.components.design.base_designs import ScrollDesign
+from ui.components.design.icon_design import IconDesign
 from ui.components.motion_editor import MotionEditor
 from ui.components.setting_cards import *
-from ui.components.design.icon_design import IconDesign
+
 
 class ModelSettingsDesign(ScrollDesign, IconDesign):
 
     def __init__(self, config: Configuration):
         super().__init__()
         self.resource_dir = config.resource_dir.value
-        self.card_changeModel = ChangeModelSettingCard(config.model_name, config.model_list, self.icon("model.svg"), "模型")
+        self.card_changeModel = ChangeModelSettingCard(config.model_name,
+                                                       config.model_list,
+                                                       self.icon("model.svg"),
+                                                       "模型")
 
         expandable = ExpandGroupSettingCard(self.icon("motion_group.svg"), "动作组")
         self.motionEditor = MotionEditor(config.model3Json)

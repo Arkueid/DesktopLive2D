@@ -1,4 +1,4 @@
-from abc import ABC, abstractmethod
+from abc import ABC
 
 from config.configuration import Configuration
 from ui.components.design.app_settings_design import AppSettingsDesign

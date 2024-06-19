@@ -1,9 +1,7 @@
+from PySide2.QtGui import QIntValidator
 from PySide2.QtWidgets import (QWidget,
-                               QGridLayout, QFileDialog, QVBoxLayout)
-from PySide2.QtGui import QColor, QIntValidator
-from PySide2.QtCore import Qt
-from qfluentwidgets import LineEdit, PrimaryPushButton, Slider, BodyLabel, ToggleToolButton, \
-    FluentIcon, CheckBox
+                               QGridLayout)
+from qfluentwidgets import LineEdit, PrimaryPushButton, BodyLabel, CheckBox
 
 
 class ApiSettingsDesign(QWidget):

@@ -39,5 +39,3 @@ class ModelSettings(ModelSettingsDesign):
     
     def onChangeModel(self):
         self.callBackSet.onChangeModel(self.motionEditor.populate_tree)
-
-

@@ -51,8 +51,7 @@ class Scene(QOpenGLWidget):
         self.timer = -1
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
         self.setWindowFlags(
-            Qt.WindowType.Tool
-            | Qt.WindowType.FramelessWindowHint
+            Qt.WindowType.Tool | Qt.WindowType.FramelessWindowHint
         )
 
     def setup(self, config: Configuration, callbackSet: CallBackSet):

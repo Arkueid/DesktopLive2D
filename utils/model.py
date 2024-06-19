@@ -37,7 +37,7 @@ class Model(Scene.CallBackSet):
     def onUpdate(self, ww: int, wh: int):
         self.model.SetScale(self.config.scale.value)
         self.model.SetOffset(self.config.drawX.value, self.config.drawY.value)
-        
+
         live2d.clearBuffer()
         self.model.Update()
 
@@ -88,7 +88,8 @@ class Model(Scene.CallBackSet):
         self.model = live2d.LAppModel()
 
         self.model.LoadModelJson(
-            os.path.join(self.config.resource_dir.value, self.config.model_name.value, self.config.model_name.value + settings.MODEL_JSON_SUFFIX)
+            os.path.join(self.config.resource_dir.value, self.config.model_name.value,
+                         self.config.model_name.value + settings.MODEL_JSON_SUFFIX)
         )
 
         self.motionFinished = True
@@ -113,7 +114,6 @@ class Model(Scene.CallBackSet):
             info = time.strftime("[INFO  %Y-%m-%d %H:%M:%S] sound finished", time.localtime(time.time()))
             print(info)
             self.set_text_finished()
-   
 
     def set_text_finished(self):
         if self.motionFinished and self.soundFinished:
