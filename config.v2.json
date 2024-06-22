@@ -1,0 +1,41 @@
+{
+    "model": {
+        "auto_repair": false,
+        "drawX": 0.0,
+        "drawY": 0.0,
+        "lip_sync": 1.0,
+        "name": "kasumi2",
+        "motion_interval": 10,
+        "resource_dir": "Resources/v2",
+        "scale": 1.0
+    },
+    "chat": {
+        "server": "http://kasumi.com",
+        "textPath": "",
+        "voicePath": ""
+    },
+    "mouse": {
+        "click_transparent": true,
+        "enable": true,
+        "eye_tracking": true
+    },
+    "scene": {
+        "fps": 30,
+        "height": 370,
+        "lastX": 317,
+        "lastY": 218,
+        "stay_on_top": false,
+        "visible": true,
+        "width": 280
+    },
+    "systray": {
+        "icon": "Resources/icon.png"
+    },
+    "QFluentWidgets": {
+        "ThemeColor": "#ff009faa",
+        "ThemeMode": "Light"
+    },
+    "audio": {
+        "volume": 100
+    }
+}

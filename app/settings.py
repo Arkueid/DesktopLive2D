@@ -2,7 +2,7 @@ from app.define import AppMode, Live2DVersion
 
 APP_MODE = AppMode.DEBUG
 
-LIVE2D_VERSION = Live2DVersion.V3
+LIVE2D_VERSION = Live2DVersion.V2
 
 if LIVE2D_VERSION == Live2DVersion.V3:
     MODEL_JSON_SUFFIX = ".model3.json"

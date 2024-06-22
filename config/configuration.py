@@ -38,3 +38,8 @@ class Configuration(QConfig):
     icon_path: ConfigItem = ConfigItem("systray", "icon", "Resources/icon.png")
 
     volume: RangeConfigItem = RangeConfigItem("audio", "volume", 100, RangeValidator(0, 100))
+
+    # chat api
+    chatServer: ConfigItem = ConfigItem("chat", "server", "")
+    textPath: ConfigItem = ConfigItem("chat", "textPath", "")
+    voicePath: ConfigItem = ConfigItem("chat", "voicePath", "")

@@ -4,3 +4,5 @@ testenv
 *.rar
 *.tar.gz
 .idea
+chat
+test

@@ -4,7 +4,6 @@ import sys
 from PySide2.QtWidgets import QApplication
 from qfluentwidgets import qconfig, Flyout
 
-import app.settings as settings
 from app import live2d, settings
 from config.configuration import Configuration
 from ui.components.app_settings import AppSettings

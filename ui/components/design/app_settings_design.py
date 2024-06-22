@@ -26,7 +26,6 @@ class AppSettingsDesign(ScrollDesign, IconDesign):
         self.card_scale = DoubleSpinSettingCard(config.scale, self.icon("scale.svg"), "缩放比例")
         self.card_volume = RangeSettingCard(config.volume, self.icon("volume.svg"), "音量")
         self.card_volume.setContentsMargins(10, 10, 20, 10)
-        # self.card_auto_repair = SwitchSettingCard(configItem=config.auto_repair, icon=FluentIcon.SETTING, title="自动修复")
 
         self.vBoxLayout.addWidget(self.card_width)
         self.vBoxLayout.addWidget(self.card_height)
@@ -36,6 +35,5 @@ class AppSettingsDesign(ScrollDesign, IconDesign):
         self.vBoxLayout.addWidget(self.card_lip_sync)
         self.vBoxLayout.addWidget(self.card_scale)
         self.vBoxLayout.addWidget(self.card_volume)
-        # self.vBoxLayout.addWidget(self.card_auto_repair)
 
 

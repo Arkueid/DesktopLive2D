@@ -96,3 +96,18 @@ class ChangeModelSettingCard(StyledSettingCard):
 
     def changeModel(self):
         self.configItem.value = self.cb.currentText()
+
+
+class TextSettingCard(StyledSettingCard):
+
+    def __init__(self, configItem: ConfigItem, icon: Union[str, QIcon, FluentIconBase], title):
+        super().__init__(icon, title)
+        self.item = configItem
+        self.lineEdit = LineEdit()
+        self.lineEdit.setMinimumWidth(400)
+        self.hBoxLayout.addWidget(self.lineEdit)
+        self.lineEdit.setText(configItem.value)
+        self.lineEdit.cursorPositionChanged.connect(self.setValue)
+
+    def setValue(self, value):
+        self.item.value = self.lineEdit.text()

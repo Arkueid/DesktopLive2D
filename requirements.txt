@@ -1,2 +1,4 @@
-pyside2
+pyside2~=5.15.2.1
 pyside2-fluent-widgets
+
+requests~=2.32.3
