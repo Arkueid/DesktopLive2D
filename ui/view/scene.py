@@ -20,7 +20,11 @@ class Scene(QOpenGLWidget):
             pass
 
         @abstractmethod
-        def onTouch(self, rx: int, ry: int):
+        def onLeftClick(self, rx: int, ry: int):
+            pass
+
+        @abstractmethod
+        def onRightClick(self, rx: int, ry: int):
             pass
 
         @abstractmethod
@@ -112,7 +116,9 @@ class Scene(QOpenGLWidget):
 
     def mouseReleaseEvent(self, event):
         if self.config.enable and event.button() == Qt.MouseButton.LeftButton:
-            self.callBackSet.onTouch(event.x(), event.y())
+            self.callBackSet.onLeftClick(event.x(), event.y())
+        elif self.config.enable and event.button() == Qt.MouseButton.RightButton:
+            self.callBackSet.onRightClick(event.x(), event.y())
 
     def mouseMoveEvent(self, event):
         if self.config.enable and event.buttons() & Qt.MouseButton.LeftButton:

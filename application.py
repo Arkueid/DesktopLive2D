@@ -1,21 +1,37 @@
 import os
 import sys
 
+from PySide2.QtCore import QObject, Signal, QTimer
 from PySide2.QtWidgets import QApplication
 from qfluentwidgets import qconfig, Flyout
 
 from app import live2d, settings
+from chat.client.baidu.qianfan import Qianfan
 from config.configuration import Configuration
 from ui.components.app_settings import AppSettings
 from ui.components.model_settings import ModelSettings
-from ui.view.flyout_text import FlyoutText
+from ui.view.flyout_chatbox import FlyoutChatBox
 from ui.view.scene import Scene
 from ui.view.settings import Settings
 from ui.view.systray import Systray
-from utils.model import Model, find_model_dir
+from core.audio_device import AudioDevice
+from core.model import Model, find_model_dir
+from core.popup_text import PopupText
+from core.chat_delegate import ChatDelegate
+import threading as td
 
 
-class Application(Systray.CallbackSet, AppSettings.CallBackSet, ModelSettings.CallbackSet):
+class Signals(QObject):
+
+    sentSucceeded = Signal(str, str)
+
+
+class Application(
+    Systray.CallbackSet,
+    AppSettings.CallBackSet,
+    ModelSettings.CallbackSet,
+    Model.CallbackSet
+):
 
     app: QApplication
 
@@ -29,11 +45,20 @@ class Application(Systray.CallbackSet, AppSettings.CallBackSet, ModelSettings.Ca
 
     settings: Settings
 
-    flyoutText: FlyoutText
+    audioDevice: AudioDevice
+
+    popupText: PopupText
+
+    flyoutChatBox: FlyoutChatBox
+
+    chatDelegate: ChatDelegate
+
+    signals: Signals
 
     def __init__(self) -> None:
+        super().__init__()
         self.app = QApplication(sys.argv)
-
+        self.signals = Signals()
         self.config = Configuration()
 
     def load_config(self):
@@ -68,18 +93,36 @@ class Application(Systray.CallbackSet, AppSettings.CallBackSet, ModelSettings.Ca
         self.scene = Scene()
         self.settings = Settings(self.config)
         self.model = Model()
-        self.flyoutText = FlyoutText(self.config, self.scene)
+        self.popupText = PopupText(self.scene)
+        self.audioDevice = AudioDevice(self.config, self.model.setTextFinished)
+        self.flyoutChatBox = FlyoutChatBox(self.config, self.scene)
+        self.chatDelegate = ChatDelegate()
+
+        self.flyoutChatBox.sent.connect(self.chat)
+
+        API_KEY = "uDTLTDFxtJZSTt93RlZsZupC"
+        SECRET_KEY = "iOL7AdZldfwJVbCQ2hVrggrnIM5fS8RW"
+
+        qianfan = Qianfan(
+            API_KEY, SECRET_KEY, "ERNIE Speed-AppBuilder"
+        )
+        qianfan.load()
+        self.chatDelegate.setup(qianfan)
+        self.signals.sentSucceeded.connect(self.chatCallback)
 
         live2d.init()
-        
+
         self.systray.setup(self.config, self)
-        self.model.setup(self.config, self.flyoutText)
+        self.model.setup(self.config, self)
         self.scene.setup(self.config, self.model)
         self.settings.setup(self.config, self, self)
 
     def toggleCharacterVisibility(self):
         self.config.visible.value = not self.config.visible.value
         self.scene.show()
+
+    def setCharacterVisible(self):
+        self.scene.activateWindow()
 
     def toggleEyeTracking(self):
         self.config.track_enable.value = not self.config.track_enable.value
@@ -91,7 +134,7 @@ class Application(Systray.CallbackSet, AppSettings.CallBackSet, ModelSettings.Ca
         self.config.click_transparent.value = not self.config.click_transparent.value
 
     def lockWindow(self):
-        self.config.enable = not self.config.enable
+        self.config.enable.value = not self.config.enable.value
 
     def stickWindowToTop(self):
         self.config.stay_on_top.value = not self.config.stay_on_top.value
@@ -104,7 +147,7 @@ class Application(Systray.CallbackSet, AppSettings.CallBackSet, ModelSettings.Ca
         self.exit()
 
     def onChangeModel(self, callback):
-        self.model.load_model()
+        self.model.loadModel()
         self.config.model3Json.load(
             os.path.join(self.config.resource_dir.value,
                          self.config.model_name.value,
@@ -115,15 +158,15 @@ class Application(Systray.CallbackSet, AppSettings.CallBackSet, ModelSettings.Ca
 
     def onModel3JsonChanged(self):
         self.config.model3Json.save()
-        self.model.load_model()
+        self.model.loadModel()
         self.config.model3Json.load(
             os.path.join(self.config.resource_dir.value, self.config.model_name.value,
-            self.config.model_name.value + settings.MODEL_JSON_SUFFIX)
+                         self.config.model_name.value + settings.MODEL_JSON_SUFFIX)
         )
 
     def onPlayMotion(self, group, no):
         if self.config.visible.value:
-            self.model.start_motion(group, no, live2d.MotionPriority.FORCE.value)
+            self.model.startMotion(group, no, live2d.MotionPriority.FORCE.value)
         else:
             Flyout.create(
                 title="播放动作",
@@ -132,3 +175,55 @@ class Application(Systray.CallbackSet, AppSettings.CallBackSet, ModelSettings.Ca
                 parent=self.settings,
                 isClosable=True
             )
+
+    def onPlayText(self, group, no):
+        self.popupText.fadeOut()
+        self.popupText.popup(
+            self.config.model3Json.motion_groups().group(group).motion(no).text(),
+        )
+
+    def onMotionSoundFinished(self):
+        self.popupText.fadeOut()
+
+    def onPlaySound(self, group: str, no: int):
+        soundFile = self.config.model3Json.motion_groups().group(group).motion(no).sound()
+        if not soundFile:
+            return
+        path = os.path.join(self.config.model3Json.src_dir(), soundFile)
+        if not os.path.exists(path):
+            return
+        self.audioDevice.play(path)
+
+    def isSoundFinished(self) -> bool:
+        return self.audioDevice.isFinished()
+
+    def onChatOpen(self):
+        self.flyoutChatBox.show()
+
+    def chatCallback(self, text, sound):
+        self.popupText.unlock()
+        self.audioDevice.unlock()
+        self.flyoutChatBox.clearText()
+        if text:
+            self.popupText.popup(text)
+            timer = QTimer(self.popupText.current)
+            timer.timeout.connect(self.popupText.fadeOut)
+            timer.start(200 * len(text))
+        if sound:
+            self.audioDevice.play(sound)
+
+    def chatTask(self, text: str):
+        try:
+            self.chatDelegate.chat(text, self.signals.sentSucceeded.emit)
+        finally:
+            self.popupText.unlock()
+            self.audioDevice.unlock()
+            self.flyoutChatBox.enable()
+
+    def chat(self, text: str):
+        self.popupText.fadeOut()
+        self.audioDevice.stop()
+        self.popupText.lock()
+        self.audioDevice.lock()
+        self.flyoutChatBox.disable()
+        td.Thread(None, self.chatTask, "chat-task", (text, )).start()

@@ -6,3 +6,6 @@ testenv
 .idea
 chat
 test
+*.db
+
+access_token.json

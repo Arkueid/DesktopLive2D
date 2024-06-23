@@ -6,7 +6,7 @@ from PySide2.QtWidgets import (
 )
 from PySide2.QtCore import Qt
 from ui.components.dialogs import InputDialog
-from utils.model3json import MotionGroups, Model3Json, Motion, MotionGroup
+from core.model3json import MotionGroups, Model3Json, Motion, MotionGroup
 
 from qfluentwidgets import TreeWidget, TextEdit, BodyLabel, RoundMenu, Dialog, \
     FluentIcon, Action, SplitPushButton

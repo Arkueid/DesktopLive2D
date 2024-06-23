@@ -15,6 +15,10 @@ class Systray(QSystemTrayIcon):
             pass
 
         @abstractmethod
+        def setCharacterVisible(self):
+            pass
+
+        @abstractmethod
         def toggleEyeTracking(self):
             pass
 
@@ -64,7 +68,7 @@ class Systray(QSystemTrayIcon):
         if reason == self.ActivationReason.Context:
             self.contextMenu().show()
         elif reason == self.ActivationReason.DoubleClick:
-            self.callbackSet.toggleCharacterVisibility()
+            self.callbackSet.setCharacterVisible()
             self.action_ls[0].setChecked(not self.action_ls[0].isChecked())
 
     def setup(self, config: Configuration, callbackSet: CallbackSet):

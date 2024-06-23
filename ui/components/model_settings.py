@@ -1,7 +1,7 @@
 from abc import abstractmethod, ABC
 
 from ui.components.design.model_settings_design import ModelSettingsDesign
-from utils.model3json import MotionGroups
+from core.model3json import MotionGroups
 
 from config.configuration import Configuration
 

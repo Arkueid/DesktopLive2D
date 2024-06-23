@@ -1,7 +1,7 @@
 from qfluentwidgets import ConfigItem, QConfig, RangeConfigItem, RangeValidator, BoolValidator
 
 from app import settings, define
-from utils.model3json import Model3Json
+from core.model3json import Model3Json
 
 
 class Configuration(QConfig):
