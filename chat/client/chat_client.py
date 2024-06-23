@@ -19,6 +19,9 @@ class ChatClient(ABC):
         """
         pass
 
+    def load(self):
+        pass
+
 
 class ChatClientWithCache(ChatClient, ABC):
     """

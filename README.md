@@ -27,6 +27,12 @@
 3.0 版本模型：
 ![v3](./images/v3.png)
 
+聊天功能：（目前使用百度千帆，使用其他大模型需要自行编写 `client`，继承 [chat/client/chat_client](./chat/client/chat_client.py) 中的 `ChatClientWithCache`，并在 [app/settings.py](./app/settings.py) 中替换 `CHAT_CLIENT`。
+
+![chat-send](./images/chat-send.png)
+
+![chat-res](./images/chat-res.png)
+
 ## 运行
 ### live2d 文件格式：
 

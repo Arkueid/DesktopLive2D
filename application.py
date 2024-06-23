@@ -6,7 +6,6 @@ from PySide2.QtWidgets import QApplication
 from qfluentwidgets import qconfig, Flyout
 
 from app import live2d, settings
-from chat.client.baidu.qianfan import Qianfan
 from config.configuration import Configuration
 from ui.components.app_settings import AppSettings
 from ui.components.model_settings import ModelSettings
@@ -22,7 +21,6 @@ import threading as td
 
 
 class Signals(QObject):
-
     sentSucceeded = Signal(str, str)
 
 
@@ -32,7 +30,6 @@ class Application(
     ModelSettings.CallbackSet,
     Model.CallbackSet
 ):
-
     app: QApplication
 
     systray: Systray
@@ -100,14 +97,7 @@ class Application(
 
         self.flyoutChatBox.sent.connect(self.chat)
 
-        API_KEY = "uDTLTDFxtJZSTt93RlZsZupC"
-        SECRET_KEY = "iOL7AdZldfwJVbCQ2hVrggrnIM5fS8RW"
-
-        qianfan = Qianfan(
-            API_KEY, SECRET_KEY, "ERNIE Speed-AppBuilder"
-        )
-        qianfan.load()
-        self.chatDelegate.setup(qianfan)
+        self.chatDelegate.setup(settings.CHAT_CLIENT)
         self.signals.sentSucceeded.connect(self.chatCallback)
 
         live2d.init()
@@ -226,4 +216,4 @@ class Application(
         self.popupText.lock()
         self.audioDevice.lock()
         self.flyoutChatBox.disable()
-        td.Thread(None, self.chatTask, "chat-task", (text, )).start()
+        td.Thread(None, self.chatTask, "chat-task", (text,)).start()
