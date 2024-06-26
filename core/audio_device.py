@@ -1,4 +1,3 @@
-import time
 from abc import ABC, abstractmethod
 
 from PySide2.QtCore import QUrl, QCoreApplication
@@ -6,6 +5,7 @@ from PySide2.QtMultimedia import QMediaPlayer
 
 from config import Configuration
 from core.lock import Lockable
+from utils import log
 
 
 class IAudioDevice(ABC):
@@ -46,8 +46,7 @@ class AudioDevice(IAudioDevice, Lockable):
     def __onFinished(self, state):
         if state == QMediaPlayer.EndOfMedia:
             self.finished = True
-            info = time.strftime("[INFO  %Y-%m-%d %H:%M:%S] sound finished", time.localtime(time.time()))
-            print(info)
+            log.info("sound finished")
             self.onFinishCallback()
 
     @Lockable.lock_decor
@@ -56,7 +55,7 @@ class AudioDevice(IAudioDevice, Lockable):
         self.finished = False
         self.audioPlayer.setMedia(QUrl.fromLocalFile(audioPath))
         self.audioPlayer.play()
-        print(f"[INFO  {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))}] play audio: {audioPath}")
+        log.info(f"play audio: {audioPath}")
 
     @Lockable.lock_decor
     def stop(self):

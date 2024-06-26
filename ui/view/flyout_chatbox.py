@@ -1,6 +1,6 @@
 from PySide2.QtCore import Qt, Signal
-from PySide2.QtGui import QColor
-from PySide2.QtWidgets import QWidget, QHBoxLayout, QGraphicsDropShadowEffect
+from PySide2.QtGui import QColor, QKeySequence
+from PySide2.QtWidgets import QWidget, QHBoxLayout, QGraphicsDropShadowEffect, QAction, QShortcut
 from qfluentwidgets import isDarkTheme, FlyoutViewBase, LineEdit, ToolButton, PrimaryToolButton, FluentIcon
 
 from config import Configuration
@@ -36,7 +36,6 @@ class FlyoutChatBox(QWidget):
 
         self.hBoxLayout = QHBoxLayout(self)
 
-        # self.hBoxLayout.setContentsMargins(15, 8, 15, 20)
         self.hBoxLayout.addWidget(self.view)
         self.setShadowEffect()
 
@@ -45,7 +44,8 @@ class FlyoutChatBox(QWidget):
                             Qt.WindowType.NoDropShadowWindowHint)
 
         self.view.closeBtn.released.connect(self.hide)
-        self.view.sendBtn.released.connect(lambda: self.sent.emit(self.view.lineEdit.text()))
+        self.view.sendBtn.released.connect(self.__sendMsg)
+        self.view.lineEdit.returnPressed.connect(self.__sendMsg)
 
     def setShadowEffect(self, blurRadius=35, offset=(0, 8)):
         color = QColor(0, 0, 0, 80 if isDarkTheme() else 30)
@@ -73,3 +73,6 @@ class FlyoutChatBox(QWidget):
     def enable(self):
         self.view.sendBtn.setEnabled(True)
 
+    def __sendMsg(self):
+        if len(self.view.lineEdit.text()) > 0:
+            self.sent.emit(self.view.lineEdit.text())

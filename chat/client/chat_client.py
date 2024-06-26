@@ -1,7 +1,6 @@
 from abc import abstractmethod, ABC
 
 from chat.cache.database import Message
-from chat.client.response import Response
 
 
 class ChatClient(ABC):
@@ -29,8 +28,6 @@ class ChatClientWithCache(ChatClient, ABC):
     """
 
     def load(self):
-
         query = Message.select().where(Message.src in (self.user, self.assistant),
                                        Message.dst in (self.assistant, self.user))
         self.messages = [{'role': msg.src, 'content': msg.text} for msg in query]
-

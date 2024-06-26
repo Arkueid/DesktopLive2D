@@ -97,7 +97,6 @@ class MotionGroups:
         self.__meta = meta
 
 
-# todo
 class Model3Json:
     __meta: dict
     __src_file: str

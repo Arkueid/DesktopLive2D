@@ -4,6 +4,7 @@ from abc import ABC, abstractmethod
 from qfluentwidgets import TeachingTip, TeachingTipTailPosition, TeachingTipView
 
 from core.lock import Lockable
+from utils import log
 
 
 class IPopupText(ABC):
@@ -50,5 +51,4 @@ class PopupText(IPopupText, Lockable):
     def __delete(self):
         self.current.close()
         self.current = None
-        info = time.strftime("[INFO  %Y-%m-%d %H:%M:%S] text finished", time.localtime(time.time()))
-        print(info)
+        log.info("text finished")

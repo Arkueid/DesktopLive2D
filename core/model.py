@@ -8,6 +8,7 @@ from PySide2.QtMultimedia import QMediaPlayer
 from app import live2d, settings
 from config.configuration import Configuration
 from ui.view.scene import Scene
+from utils import log
 
 
 def find_model_dir(path: str) -> list[str]:
@@ -122,8 +123,7 @@ class Model(Scene.CallBackSet):
 
     def setMotionFinished(self):
         self.motionFinished = True
-        info = time.strftime("[INFO  %Y-%m-%d %H:%M:%S] motion finished", time.localtime(time.time()))
-        print(info)
+        log.info("motion finished")
         self.setTextFinished()
 
     def setTextFinished(self):

@@ -1,12 +1,13 @@
-import asyncio
 import json
 import os.path
 import time
 
+import requests
+
 from chat.cache.database import Message
 from chat.client.chat_client import ChatClientWithCache
 from chat.client.response import Response
-import requests
+from utils import log
 
 
 class Qianfan(ChatClientWithCache):
@@ -80,7 +81,7 @@ class Qianfan(ChatClientWithCache):
         使用 AK，SK 生成鉴权签名（Access Token）
         :return: access_token，或是None(如果错误)
         """
-        print("refresh access token")
+        log.info("refresh access token")
         url = "https://aip.baidubce.com/oauth/2.0/token"
         params = {"grant_type": "client_credentials", "client_id": self.API_KEY, "client_secret": self.SECRET_KEY}
         x = requests.post(url, params=params).json()

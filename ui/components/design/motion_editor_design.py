@@ -11,6 +11,8 @@ from core.model3json import MotionGroups, Model3Json, Motion, MotionGroup
 from qfluentwidgets import TreeWidget, TextEdit, BodyLabel, RoundMenu, Dialog, \
     FluentIcon, Action, SplitPushButton
 
+from utils import log
+
 
 class MotionEditorDesign(QWidget):
     data: MotionGroups | None
@@ -46,7 +48,7 @@ class MotionEditorDesign(QWidget):
         self.setLayout(vbox)
         vbox.addWidget(splitter)
 
-        self.playMotionFunc = lambda group, idx: print(group, idx)
+        self.playMotionFunc = lambda group, idx: log.info(f"play motion: [{group}_{idx}]")
 
         splitter.setSizes([300, 600])
 

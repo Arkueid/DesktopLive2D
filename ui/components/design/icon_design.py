@@ -1,6 +1,7 @@
 import os
 from PySide2.QtGui import QIcon
 
+
 class IconDesign:
     resource_dir: str
 
