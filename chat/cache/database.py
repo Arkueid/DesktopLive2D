@@ -18,6 +18,15 @@ class Message(pw.Model):
     class Meta:
         database = db
 
+    @staticmethod
+    def DataSource(date: str = None):
+        if date is None:
+            for i in Message.select():
+                yield i
+        else:
+            for i in Message.select().where(pw.fn.DATE_TRUNC('day', Message.ct) == "%s 00:00:00" % date):
+                yield i
+
 
 db.create_tables([Message], safe=True)
 

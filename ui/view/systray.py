@@ -1,6 +1,6 @@
 from abc import abstractmethod, ABC
 
-from PySide2.QtGui import QIcon
+from PySide2.QtGui import QIcon, QCursor
 from PySide2.QtWidgets import QSystemTrayIcon, QAction
 from qfluentwidgets import CheckableMenu
 
@@ -67,6 +67,8 @@ class Systray(QSystemTrayIcon):
     def on_activated(self, reason):
         if reason == self.ActivationReason.Context:
             self.contextMenu().show()
+            # 有些设备上菜单超出屏幕边缘，无法完全显示，为此显示菜单后平移固定距离
+            self.contextMenu().move(QCursor.pos().x(), QCursor.pos().y() - self.contextMenu().height())
         elif reason == self.ActivationReason.DoubleClick:
             self.callbackSet.setCharacterVisible()
             self.action_ls[0].setChecked(not self.action_ls[0].isChecked())

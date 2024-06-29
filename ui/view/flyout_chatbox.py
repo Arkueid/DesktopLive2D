@@ -17,8 +17,11 @@ class FlyoutChatView(FlyoutViewBase):
         self.sendBtn.setIcon(FluentIcon.SEND)
         self.closeBtn = ToolButton()
         self.closeBtn.setIcon(FluentIcon.CLOSE)
+        self.historyBtn = ToolButton()
+        self.historyBtn.setIcon(FluentIcon.HISTORY)
         hbox.addWidget(self.lineEdit)
         hbox.addWidget(self.sendBtn)
+        hbox.addWidget(self.historyBtn)
         hbox.addWidget(self.closeBtn)
 
 
