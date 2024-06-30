@@ -1,9 +1,9 @@
-from ui.components.design.api_settings_design import ApiSettingsDesign
+from chat.data.entity import Message
 from config import Configuration
-from ui.components.design.icon_design import IconDesign
+from ui.components.design.chat_settings_design import ChatSettingsDesign
 
 
-class ApiSettings(ApiSettingsDesign):
+class ChatSettings(ChatSettingsDesign):
 
     def __init__(self, config: Configuration):
         super().__init__(config)
@@ -12,4 +12,7 @@ class ApiSettings(ApiSettingsDesign):
         self.setObjectName("api_settings")
 
     def setup(self):
-        pass
+        self.updateArchive()
+
+    def updateArchive(self):
+        self.messageArchive.setChatIds(Message.chatIds(), Message.DataSource)

@@ -10,7 +10,12 @@
         "scale": 1.0
     },
     "chat": {
-        "server": "http://kasumi.com",
+        "character": "sddsd",
+        "chatId": "7ac368d6-1bc7-4e9b-9b80-5747ce608101",
+        "user": "user"
+    },
+    "server": {
+        "server": "",
         "textPath": "",
         "voicePath": ""
     },
@@ -21,12 +26,12 @@
     },
     "scene": {
         "fps": 30,
-        "height": 370,
-        "lastX": 949,
-        "lastY": 223,
+        "height": 200,
+        "lastX": 1115,
+        "lastY": 513,
         "stay_on_top": false,
         "visible": true,
-        "width": 280
+        "width": 170
     },
     "systray": {
         "icon": "Resources/icon.png"
@@ -36,6 +41,6 @@
         "ThemeMode": "Light"
     },
     "audio": {
-        "volume": 10
+        "volume": 100
     }
 }

@@ -12,10 +12,10 @@ class ModelSettingsDesign(ScrollDesign, IconDesign):
         self.resource_dir = config.resource_dir.value
         self.card_changeModel = ChangeModelSettingCard(config.model_name,
                                                        config.model_list,
-                                                       self.icon("model.svg"),
+                                                       FluentIcon.PEOPLE,
                                                        "模型")
 
-        expandable = ExpandGroupSettingCard(self.icon("motion_group.svg"), "动作组")
+        expandable = ExpandGroupSettingCard(FluentIcon.PLAY, "动作组")
         self.motionEditor = MotionEditor(config.model3Json)
         self.btn_save = PrimaryPushButton("保存")
         expandable.addGroupWidget(self.motionEditor)

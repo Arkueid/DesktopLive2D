@@ -4,68 +4,57 @@ import time
 
 import requests
 
-from chat.cache.database import Message
-from chat.client.chat_client import ChatClientWithCache
-from chat.client.response import Response
+from chat.client.chat_client import ChatClientWithSQLite
+from chat.client.responses import ChatResponse
+from chat.data.entity import Message
 from utils import log
 
 
-class Qianfan(ChatClientWithCache):
-    class Response(Response):
-        _text: str
-
-        def __init__(self, text: str):
-            self._text = text
-
-        def sound(self) -> None:
-            return None
-
-        def text(self) -> str:
-            return self._text
-
+class Qianfan(ChatClientWithSQLite):
     API_KEY: str
     SECRET_KEY: str
-    MODEL: str
-    API: str
+    KEY_SRC = "role"
+    KEY_CONTENT = "content"
 
-    user = "user"
-    assistant = "assistant"
+    MODEL: str = "ERNIE Speed-AppBuilder"
+    API: str = "https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/ai_apaas"
+    VALUE_USER = "user"
+    VALUE_ASSISTANT = "assistant"
     access_token: str = ""
     expire_at: int = 0
 
-    def __init__(self, apiKey: str, secretKey: str, model: str):
+    def __init__(self, apiKey: str, secretKey: str):
+        super().__init__("qianfan", "role", "content")
         self.API_KEY = apiKey
         self.SECRET_KEY = secretKey
-        self.MODEL = model
-        self.API = "https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/ai_apaas"
-        self.messages = list()
 
     def chat(self, text):
-        Message.create(dst=self.assistant, src=self.user, text=text)
+        Message.create(chatId=self.config.chatId.value, dst=self.VALUE_ASSISTANT, src=self.VALUE_USER, text=text)
+        self.messages.append({
+            "role": self.VALUE_USER,
+            "content": text
+        })
 
         try:
-            res = self.__baidu_api(text)
+            res = self.__baidu_api()
         except Exception as e:
             res = str(e)
 
         self.messages.append({
-            'role': self.assistant,
-            'content': text
+            'role': self.VALUE_ASSISTANT,
+            'content': res
         })
-        Message.create(src=self.assistant, dst=self.user, text=res)
-        return self.Response(res)
+        Message.create(chatId=self.config.chatId.value, src=self.VALUE_ASSISTANT, dst=self.VALUE_USER, text=res)
 
-    def __baidu_api(self, text):
+        return ChatResponse({'text': res})
+
+    def __baidu_api(self):
         if not self.expire_at or time.time() > self.expire_at:
             self.get_access_token()
 
         url = f"{self.API}?access_token={self.access_token}"
-        self.messages.append({
-            "role": self.user,
-            "content": text
-        })
         payload = {
-            "messages": self.messages,
+            "messages": self.getCharaSetting() + self.messages,
             "temperature": 0.95,
             "top_p": 0.7,
             "penalty_score": 1
@@ -74,7 +63,7 @@ class Qianfan(ChatClientWithCache):
             "ContentType": "application/json"
         }
         res = requests.post(url, headers=headers, data=json.dumps(payload))
-        return res.json().get('result')
+        return res.json().get('result', str(res.json()))
 
     def get_access_token(self):
         """
@@ -89,25 +78,20 @@ class Qianfan(ChatClientWithCache):
         self.expire_at = time.time() + x.get('expires_in')
         self.save_token()
 
-    def load(self):
-        super().load()
-        access_token_path = 'access_token.json'
+    def loadMessages(self, chat_id: str):
+        access_token_path = 'access_token.baidu.json'
 
-        if not os.path.exists(access_token_path):
-            return
+        if os.path.exists(access_token_path):
+            with open(access_token_path, 'r', encoding='utf-8') as f:
+                x = json.loads(f.read())
+                self.access_token = x.get('access_token')
+                self.expire_at = x.get('expire_at')
 
-        with open(access_token_path, 'r', encoding='utf-8') as f:
-            x = json.loads(f.read())
-            self.access_token = x.get('access_token')
-            self.expire_at = x.get('expire_at')
+        return super().loadMessages(chat_id)
 
     def save_token(self):
-        with open(f'access_token.json', 'w', encoding='utf-8') as f:
+        with open(f'access_token.baidu.json', 'w', encoding='utf-8') as f:
             f.write(json.dumps({
                 'access_token': self.access_token,
                 'expire_at': self.expire_at
             }, ensure_ascii=False))
-
-
-
-

@@ -6,6 +6,5 @@ testenv
 .idea
 test
 *.db
-*.bat
 
 access_token.json

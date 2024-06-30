@@ -1,6 +1,4 @@
 from app.define import AppMode, Live2DVersion
-from chat.client.baidu.qianfan import Qianfan
-from chat.client.chat_client import ChatClient
 
 APP_MODE = AppMode.DEBUG
 
@@ -8,10 +6,6 @@ LIVE2D_VERSION = Live2DVersion.V2
 
 API_KEY = "uDTLTDFxtJZSTt93RlZsZupC"
 SECRET_KEY = "iOL7AdZldfwJVbCQ2hVrggrnIM5fS8RW"
-
-CHAT_CLIENT: ChatClient = Qianfan(
-    API_KEY, SECRET_KEY, "ERNIE Speed-AppBuilder"
-)
 
 if LIVE2D_VERSION == Live2DVersion.V3:
     MODEL_JSON_SUFFIX = ".model3.json"

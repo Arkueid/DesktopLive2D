@@ -1,3 +1,5 @@
+import uuid
+
 from qfluentwidgets import ConfigItem, QConfig, RangeConfigItem, RangeValidator, BoolValidator
 
 from app import settings, define
@@ -40,6 +42,10 @@ class Configuration(QConfig):
     volume: RangeConfigItem = RangeConfigItem("audio", "volume", 100, RangeValidator(0, 100))
 
     # chat api
-    chatServer: ConfigItem = ConfigItem("chat", "server", "")
-    textPath: ConfigItem = ConfigItem("chat", "textPath", "")
-    voicePath: ConfigItem = ConfigItem("chat", "voicePath", "")
+    chatServer: ConfigItem = ConfigItem("server", "server", "")
+    textPath: ConfigItem = ConfigItem("server", "textPath", "")
+    voicePath: ConfigItem = ConfigItem("server", "voicePath", "")
+
+    user: ConfigItem = ConfigItem("chat", "user", default="user")
+    chara: ConfigItem = ConfigItem("chat", "character", default="toyama kasumi")
+    chatId: ConfigItem = ConfigItem("chat", "chatId", default=str(uuid.uuid4()))

@@ -14,6 +14,5 @@ elif settings.APP_MODE == define.AppMode.RELEASE:
 else:
     raise Exception("Unknown app mode: %s", settings.APP_MODE)
 
-settings.CHAT_CLIENT.load()
 
 __all__ = ['live2d', 'settings', 'define']

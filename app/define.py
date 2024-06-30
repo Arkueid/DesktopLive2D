@@ -1,5 +1,7 @@
 from enum import Enum
 
+from app import settings
+
 
 class AppMode(Enum):
     RELEASE = 1
@@ -9,3 +11,4 @@ class AppMode(Enum):
 class Live2DVersion(Enum):
     V3 = 1
     V2 = 2
+

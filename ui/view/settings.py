@@ -1,18 +1,20 @@
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QApplication
-from qfluentwidgets import FluentWindow
+from qfluentwidgets import FluentWindow, FluentIcon
 
+from chat.data.entity import Message
 from config import Configuration
 from ui.components.app_settings import AppSettings
-from ui.components.api_settings import ApiSettings
+from ui.components.chat_settings import ChatSettings
 from ui.components.design.icon_design import IconDesign
+from ui.components.message_archive import MessageArchive
 from ui.components.model_settings import ModelSettings
 
 
 class Settings(FluentWindow, IconDesign):
     appSettings: AppSettings
     modelSettings: ModelSettings
-    apiSettings: ApiSettings
+    chatSettings: ChatSettings
 
     config: Configuration
 
@@ -22,10 +24,10 @@ class Settings(FluentWindow, IconDesign):
         self.setWindowFlags(self.windowFlags() | Qt.WindowType.FramelessWindowHint | Qt.WindowType.Tool)
         self.appSettings = AppSettings(config)
         self.modelSettings = ModelSettings(config)
-        self.apiSettings = ApiSettings(config)
-        self.addSubInterface(self.appSettings, self.icon("app_settings.svg"), "应用设置")
-        self.addSubInterface(self.modelSettings, self.icon("model_settings.svg"), "模型设置")
-        self.addSubInterface(self.apiSettings, self.icon("chat.svg"), "聊天设置")
+        self.chatSettings = ChatSettings(config)
+        self.addSubInterface(self.appSettings, FluentIcon.APPLICATION, "应用设置")
+        self.addSubInterface(self.modelSettings, FluentIcon.BRUSH, "模型设置")
+        self.addSubInterface(self.chatSettings, FluentIcon.MESSAGE, "聊天设置")
         self.setMinimumSize(700, 500)
 
     def setup(self,
@@ -40,7 +42,7 @@ class Settings(FluentWindow, IconDesign):
         self.modelSettings.setup(ms_callback_set)
 
         # todo: add callbacks
-        self.apiSettings.setup()
+        self.chatSettings.setup()
 
     def show(self):
         self.hide()

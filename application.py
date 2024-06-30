@@ -6,6 +6,7 @@ from PySide2.QtWidgets import QApplication
 from qfluentwidgets import qconfig, Flyout
 
 from app import live2d, settings
+from chat.client.baidu.qianfan import Qianfan
 from config.configuration import Configuration
 from ui.components.app_settings import AppSettings
 from ui.components.model_settings import ModelSettings
@@ -97,7 +98,7 @@ class Application(
 
         self.flyoutChatBox.sent.connect(self.chat)
 
-        self.chatDelegate.setup(settings.CHAT_CLIENT)
+        self.chatDelegate.setup(self.config, Qianfan(settings.API_KEY, settings.SECRET_KEY))
         self.signals.sentSucceeded.connect(self.chatCallback)
 
         live2d.init()
@@ -201,6 +202,8 @@ class Application(
             timer.start(200 * len(text))
         if sound:
             self.audioDevice.play(sound)
+
+        self.settings.chatSettings.updateArchive()
 
     def chatTask(self, text: str):
         try:
