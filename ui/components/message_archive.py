@@ -91,10 +91,8 @@ class MessageArchive(QWidget):
 if __name__ == '__main__':
     from chat.cache.database import Message
 
-    dates = list(sorted(set([i.ct.strftime("%Y-%m-%d") for i in Message.select()])))
-
     app = QApplication(sys.argv)
     win = MessageArchive()
-    win.setDates(dates, Message.DataSource)
+    win.setDates(Message.dates(), Message.DataSource)
     win.show()
     app.exec_()
