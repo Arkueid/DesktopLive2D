@@ -1,9 +1,8 @@
 import uuid
 
 from PySide2.QtWidgets import QWidget, QHBoxLayout, QVBoxLayout
-from qfluentwidgets import FluentIcon, BodyLabel, ComboBox, PrimaryToolButton, ToolButton, LineEdit, TextEdit, Dialog, \
-    InfoBarIcon, FlyoutAnimationType
-from qfluentwidgets import SettingCard, ExpandGroupSettingCard, Flyout
+from qfluentwidgets import ExpandGroupSettingCard
+from qfluentwidgets import FluentIcon, BodyLabel, ComboBox, PrimaryToolButton, ToolButton, LineEdit, TextEdit, Dialog
 
 from chat.data.entity import Character
 from config import Configuration
@@ -22,8 +21,11 @@ class ChatSettingsDesign(ScrollDesign, IconDesign):
         self.lbl_charaSelector = BodyLabel()
         self.lbl_charaSelector.setText("当前角色")
         self.charaSelector = ComboBox()
-        self.charaSelector.addItems(Character.charaIds())
-        self.charaSelector.setCurrentText(self.config.chara.value)
+
+        for i in Character.idNames():
+            self.charaSelector.addItem(i[0], None, i[1])
+
+        self.charaSelector.setCurrentIndex(self.charaSelector.findData(self.config.charaId.value))
         self.addBtn = PrimaryToolButton()
         self.addBtn.setIcon(FluentIcon.ADD)
         self.deleteBtn = ToolButton()
@@ -40,9 +42,9 @@ class ChatSettingsDesign(ScrollDesign, IconDesign):
         self.label_charaId = BodyLabel("角色ID")
         self.label_charaProfile = BodyLabel("角色设定")
         self.label_charaGreeting = BodyLabel("问候语")
-        self.charaId = LineEdit()
-        self.charaId.setFixedHeight(60)
-        self.charaId.textChanged.connect(self.onEditCharaId)
+        self.charaName = LineEdit()
+        self.charaName.setFixedHeight(60)
+        self.charaName.textChanged.connect(self.onCharaNameChanged)
         self.charaProfile = TextEdit()
         self.charaProfile.setFixedHeight(200)
         self.charaProfile.textChanged.connect(self.onCharaProfileChanged)
@@ -52,7 +54,7 @@ class ChatSettingsDesign(ScrollDesign, IconDesign):
 
         settingCard = ExpandGroupSettingCard(FluentIcon.COMMAND_PROMPT, "角色设置")
         vbox.addWidget(self.label_charaId)
-        vbox.addWidget(self.charaId)
+        vbox.addWidget(self.charaName)
         vbox.addWidget(self.label_charaProfile)
         vbox.addWidget(self.charaProfile)
         vbox.addWidget(self.label_charaGreeting)
@@ -72,80 +74,68 @@ class ChatSettingsDesign(ScrollDesign, IconDesign):
         self.addBtn.released.connect(self.onAddChara)
         self.deleteBtn.released.connect(self.onDeleteChara)
 
-        self.onCharaIdChanged(self.config.chara.value)
+        self.onCharaChanged(self.config.charaId.value)
 
-        self.charaSelector.currentTextChanged.connect(self.onCharaIdChanged)
+        self.charaSelector.currentTextChanged.connect(self.onCharaChanged)
 
-    def onEditCharaId(self):
-        self.charaSelector.currentTextChanged.disconnect(self.onCharaIdChanged)
+    def onCharaNameChanged(self):
+        Character.update(name=self.charaName.text()).where(Character.charaId == self.config.charaId.value).execute()
 
-        try:
-            Character.update(charaId=self.charaId.text()).where(Character.charaId == self.config.chara.value).execute()
-            self.config.chara.value = self.charaId.text()
-        except Exception as e:
-            Flyout.create(
-                icon=InfoBarIcon.ERROR,
-                title='角色ID',
-                content="角色ID已存在!",
-                target=self,
-                parent=self,
-                isClosable=True,
-                aniType=FlyoutAnimationType.PULL_UP,
-                isDeleteOnClose=True
-            )
-
-        self.charaSelector.removeItem(self.charaSelector.currentIndex())
-        self.charaSelector.addItem(self.config.chara.value)
-        self.charaSelector.setCurrentText(self.config.chara.value)
-
-        self.charaSelector.currentTextChanged.connect(self.onCharaIdChanged)
-
-    def onCharaIdChanged(self, v):
-        self.charaId.textChanged.disconnect(self.onEditCharaId)
+    def onCharaChanged(self, v):
+        """
+        更换模型
+        """
+        self.charaName.textChanged.disconnect(self.onCharaNameChanged)
         self.charaProfile.textChanged.disconnect(self.onCharaProfileChanged)
         self.charaGreeting.textChanged.disconnect(self.onCharaGreetingChanged)
 
-        chara: Character = Character.get_by_id(v)
-        self.charaId.setText(chara.charaId)
-        self.charaProfile.setText(chara.profile)
-        self.charaGreeting.setText(chara.greeting)
+        if not v:
+            self.charaName.setText('')
+            self.charaProfile.setText('')
+            self.charaGreeting.setText('')
+        else:
+            v = self.charaSelector.currentData()
 
-        self.config.chara.value = self.charaId.text()
+            chara: Character = Character.get_by_id(v)
+            self.charaName.setText(chara.name)
+            self.charaProfile.setText(chara.profile)
+            self.charaGreeting.setText(chara.greeting)
 
-        self.charaId.textChanged.connect(self.onEditCharaId)
+            self.config.charaId.value = chara.charaId
+
+        self.charaName.textChanged.connect(self.onCharaNameChanged)
         self.charaProfile.textChanged.connect(self.onCharaProfileChanged)
         self.charaGreeting.textChanged.connect(self.onCharaGreetingChanged)
 
     def onCharaProfileChanged(self):
         (Character.update(profile=self.charaProfile.toPlainText())
-         .where(Character.charaId == self.charaId.text()).execute())
+         .where(Character.charaId == self.config.charaId.value).execute())
 
     def onCharaGreetingChanged(self):
         (Character.update(greeting=self.charaGreeting.toPlainText())
-         .where(Character.charaId == self.charaId.text()).execute())
+         .where(Character.charaId == self.config.charaId.value).execute())
 
     def onAddChara(self):
         charaId = str(uuid.uuid4())
+        name = "assistant"
         Character.create(charaId=charaId,
-                         profile="",
-                         greeting="")
-        self.charaSelector.addItem(charaId)
+                         name=name,
+                         profile="You are an AI assistant.",
+                         greeting="OK, I got it.")
+        self.charaSelector.addItem(name, None, charaId)
 
     def onDeleteChara(self):
         dialog = Dialog('删除角色',
-                        f"是否删除角色{self.config.chara.value}", self)
+                        f"是否删除角色{self.charaSelector.currentText()}({self.config.charaId.value})", self)
         if not dialog.exec():
             return
 
-        if self.charaSelector.currentText() == "toyama kasumi":
-            return
+        self.charaSelector.currentTextChanged.disconnect(self.onCharaChanged)
 
-        self.charaSelector.currentTextChanged.disconnect(self.onCharaIdChanged)
+        Character.delete().where(Character.charaId == self.config.charaId.value).execute()
 
-        Character.delete().where(Character.charaId == self.config.chara.value).execute()
+        self.charaSelector.currentTextChanged.connect(self.onCharaChanged)
 
         self.charaSelector.removeItem(self.charaSelector.currentIndex())
 
-        self.config.chara.value = self.charaSelector.currentText()
-
-        self.charaSelector.currentTextChanged.connect(self.onCharaIdChanged)
+        self.config.charaId.value = self.charaSelector.currentText()

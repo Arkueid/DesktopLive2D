@@ -10,8 +10,8 @@
         "scale": 1.0
     },
     "chat": {
-        "character": "sddsd",
-        "chatId": "7ac368d6-1bc7-4e9b-9b80-5747ce608101",
+        "charaId": "",
+        "chatId": "523044dd-6b54-482d-9b9b-503e944d9e40",
         "user": "user"
     },
     "server": {
@@ -26,7 +26,7 @@
     },
     "scene": {
         "fps": 30,
-        "height": 200,
+        "height": 300,
         "lastX": 1115,
         "lastY": 513,
         "stay_on_top": false,

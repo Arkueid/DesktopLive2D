@@ -1,9 +1,12 @@
 from abc import abstractmethod, ABC
 from typing import Any
 
+import peewee
+
 from chat.client.responses import ChatResponse
 from chat.data.entity import Message, Character
 from config import Configuration
+from utils import log
 
 
 class ChatClient(ABC):
@@ -28,12 +31,9 @@ class ChatClient(ABC):
     def setup(self, config: Configuration) -> None:
         self.config = config
         self.__loadConfig()
-        self.config.chara.valueChanged.connect(self.getCharaSetting)
         self.config.chatId.valueChanged.connect(self.loadMessages)
 
     def __loadConfig(self):
-        self.messages.clear()
-        self.getCharaSetting()
         self.loadMessages(self.config.chatId.value)
 
     @abstractmethod
@@ -41,21 +41,27 @@ class ChatClient(ABC):
         pass
 
     def getCharaSetting(self):
-        charaSetting: Character = Character.get_by_id(self.config.chara.value)
+        charaSetting: Character | None = None
+        try:
+            charaSetting = Character.get_by_id(self.config.charaId.value)
+        except Exception as e:
+            log.info(f"failed to get chara setting: {e}, use default chara[toyama kasumi] instead.")
+
         ls = [
             {
                 self.KEY_SRC: self.VALUE_USER,
-                self.KEY_CONTENT: charaSetting.profile
+                self.KEY_CONTENT: Character.DEFAULT_PROFILE if charaSetting is None else charaSetting.profile
             },
             {
                 self.KEY_SRC: self.VALUE_ASSISTANT,
-                self.KEY_CONTENT: charaSetting.greeting
+                self.KEY_CONTENT: Character.DEFAULT_GREETING if charaSetting is None else charaSetting.greeting
             }]
         return ls
 
     def loadMessages(self, chat_id: str):
-        self.messages[2:] = [{self.KEY_SRC: i.src, self.KEY_CONTENT: i.text}
-                             for i in Message.select().where(Message.chatId == chat_id)]
+        self.messages.clear()
+        self.messages.extend([{self.KEY_SRC: i.src, self.KEY_CONTENT: i.text}
+                             for i in Message.select().where(Message.chatId == chat_id)])
 
 
 class ChatClientWithSQLite(ChatClient, ABC):

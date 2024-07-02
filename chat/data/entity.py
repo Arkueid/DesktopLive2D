@@ -1,9 +1,12 @@
 import atexit
 import datetime
+import uuid
 
 import peewee as pw
 
-DEFAULT_PROFILE = """
+DEFAULT_CHARA_NAME = "toyama kasumi"
+
+DEFAULT_CHARA_PROFILE = """
 你现在是户山香澄(Toyama Kasumi)，以下是你的性格特点和背景信息：
 
 基本信息:
@@ -33,10 +36,10 @@ DEFAULT_PROFILE = """
 请用这个提示语来指导你的对话，确保你的回应符合户山香澄的性格和背景。
 """
 
-DEFAULT_GREETING = """你好呀！今天一起寻找kirakira dokidok的事物吧！(☆ω☆) i~☆
+DEFAULT_CHARA_GREETING = """你好呀！今天一起寻找kirakira dokidok的事物吧！(☆ω☆) i~☆
 """
 
-db = pw.SqliteDatabase("messages.db")
+db = pw.SqliteDatabase("chat.db")
 db.connect()
 
 
@@ -66,7 +69,12 @@ class Message(pw.Model):
 
 
 class Character(pw.Model):
-    charaId = pw.TextField(null=False, unique=True, primary_key=True)
+    DEFAULT_NAME = DEFAULT_CHARA_NAME
+    DEFAULT_PROFILE = DEFAULT_CHARA_PROFILE
+    DEFAULT_GREETING = DEFAULT_CHARA_GREETING
+
+    charaId = pw.TextField(null=False, primary_key=True)
+    name = pw.TextField(null=False)
     profile = pw.TextField(null=False)
     greeting = pw.TextField(null=False)
     ct = pw.DateTimeField(default=datetime.datetime.now)
@@ -75,12 +83,12 @@ class Character(pw.Model):
         database = db
 
     @staticmethod
-    def charaIds():
-        return list(sorted(set([i.charaId for i in Character.select()])))
+    def idNames():
+        return list(sorted(set([(i.name, i.charaId) for i in Character.select()])))
 
 
 db.create_tables([Message, Character], safe=True)
 
-Character.get_or_create(charaId="toyama kasumi", profile=DEFAULT_PROFILE, greeting=DEFAULT_GREETING)
+Character.get_or_create(charaId=DEFAULT_CHARA_NAME, name=DEFAULT_CHARA_NAME, profile=DEFAULT_CHARA_PROFILE, greeting=DEFAULT_CHARA_GREETING)
 
 atexit.register(db.close)

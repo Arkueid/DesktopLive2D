@@ -47,5 +47,5 @@ class Configuration(QConfig):
     voicePath: ConfigItem = ConfigItem("server", "voicePath", "")
 
     user: ConfigItem = ConfigItem("chat", "user", default="user")
-    chara: ConfigItem = ConfigItem("chat", "character", default="toyama kasumi")
+    charaId: ConfigItem = ConfigItem("chat", "charaId", default="toyama kasumi")
     chatId: ConfigItem = ConfigItem("chat", "chatId", default=str(uuid.uuid4()))
