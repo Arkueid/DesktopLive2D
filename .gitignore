@@ -8,3 +8,4 @@ test
 *.db
 
 access_token.json
+access_token.*.json
