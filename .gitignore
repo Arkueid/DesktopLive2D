@@ -9,3 +9,6 @@ test
 
 access_token.json
 access_token.*.json
+
+.venv
+/Resources/v3/草莓兔兔 试用/

@@ -2,10 +2,6 @@
 
 基于[live2d-py](https://github.com/Arkueid/live2d-py)。
 
-在 Python 中直接加载和操作 Live2D 模型，不通过 Web Engine 等间接方式进行渲染，提供更高的自由度和拓展性。
-
-使用 Python C API 将 Live2D Native SDK 封装为 Python 库，理论上可以在任意基于 OpenGL 的窗口上绘制 Live2D。
-
 支持 Live2D 模型版本：
 * Cubism 2.X 导出的模型：文件名格式常为 `XXX.moc`，`XXX.model.json`，`XXX.mtn`
 * Cubism 3.0 及以上导出的模型：文件名格式常为 `XXX.moc3`，`XXX.model3.json`, `XXX.motion3.json` 

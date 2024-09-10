@@ -4,10 +4,20 @@
         "drawX": 0.0,
         "drawY": 0.0,
         "lip_sync": 1.0,
-        "name": "Hiyori",
+        "name": "Haru",
         "motion_interval": 10,
         "resource_dir": "Resources/v3",
         "scale": 1.0
+    },
+    "chat": {
+        "charaId": "toyama kasumi",
+        "chatId": "e1cc04f4-3b6c-4904-9a2c-14a700fa6aea",
+        "user": "user"
+    },
+    "server": {
+        "server": "",
+        "textPath": "",
+        "voicePath": ""
     },
     "mouse": {
         "click_transparent": true,
@@ -17,8 +27,8 @@
     "scene": {
         "fps": 30,
         "height": 500,
-        "lastX": 0,
-        "lastY": 0,
+        "lastX": 942,
+        "lastY": 505,
         "stay_on_top": false,
         "visible": true,
         "width": 400

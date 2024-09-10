@@ -10,7 +10,7 @@
         "scale": 1.0
     },
     "chat": {
-        "charaId": "",
+        "charaId": "toyama kasumi",
         "chatId": "523044dd-6b54-482d-9b9b-503e944d9e40",
         "user": "user"
     },
@@ -27,9 +27,9 @@
     "scene": {
         "fps": 30,
         "height": 300,
-        "lastX": 1115,
-        "lastY": 513,
-        "stay_on_top": false,
+        "lastX": 1542,
+        "lastY": 417,
+        "stay_on_top": true,
         "visible": true,
         "width": 170
     },

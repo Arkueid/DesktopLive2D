@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 
-from PySide2.QtCore import QTimerEvent, Qt
-from PySide2.QtGui import QCursor
-from PySide2.QtWidgets import QOpenGLWidget
+from PySide6.QtCore import QTimerEvent, Qt
+from PySide6.QtGui import QCursor
+from PySide6.QtOpenGLWidgets import QOpenGLWidget
 
 from app import live2d
 from config import Configuration
@@ -53,6 +53,7 @@ class Scene(QOpenGLWidget):
         self.lastX = -1
         self.lastY = -1
         self.timer = -1
+        self.isMoving = False
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
         self.setWindowFlags(
             Qt.WindowType.Tool | Qt.WindowType.FramelessWindowHint
@@ -113,18 +114,23 @@ class Scene(QOpenGLWidget):
     def mousePressEvent(self, event):
         self.lastX = event.x()
         self.lastY = event.y()
+        self.isMoving = False
 
     def mouseReleaseEvent(self, event):
-        if self.config.enable and event.button() == Qt.MouseButton.LeftButton:
+        if self.isMoving:
+            pass
+        elif self.config.enable and event.button() == Qt.MouseButton.LeftButton:
             self.callBackSet.onLeftClick(event.x(), event.y())
         elif self.config.enable and event.button() == Qt.MouseButton.RightButton:
             self.callBackSet.onRightClick(event.x(), event.y())
+        self.isMoving = False
 
     def mouseMoveEvent(self, event):
         if self.config.enable and event.buttons() & Qt.MouseButton.LeftButton:
             self.move(event.globalX() - self.lastX, event.globalY() - self.lastY)
             self.config.lastX.value = self.x()
             self.config.lastY.value = self.y()
+            self.isMoving = True
 
     def setWidth(self, width: int):
         self.resize(width, self.height())

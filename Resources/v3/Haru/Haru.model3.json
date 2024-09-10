@@ -44,6 +44,13 @@
             }
         ],
         "Motions": {
+            "Speak": [
+                {
+                    "File": "motions/haru_g_idle.motion3.json",
+                    "Sound": "",
+                    "Text": ""
+                }
+            ],
             "Idle": [
                 {
                     "File": "motions/haru_g_idle.motion3.json",

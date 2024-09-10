@@ -1,12 +1,11 @@
 import os
-import time
 from abc import abstractmethod, ABC
-
-from PySide2.QtCore import QCoreApplication
-from PySide2.QtMultimedia import QMediaPlayer
 
 from app import live2d, settings
 from config.configuration import Configuration
+from core.lipsync import globalWavHandler
+from live2d.utils.lipsync import WavHandler
+from live2d.v3.params import StandardParams
 from ui.view.scene import Scene
 from utils import log
 
@@ -30,7 +29,6 @@ def find_model_dir(path: str) -> list[str]:
 
 
 class Model(Scene.CallBackSet):
-
     class CallbackSet(ABC):
 
         @abstractmethod
@@ -63,6 +61,10 @@ class Model(Scene.CallBackSet):
 
         live2d.clearBuffer()
         self.model.Update()
+        if globalWavHandler.Update():
+            self.model.SetParameterValue(StandardParams.ParamMouthOpenY,
+                                         globalWavHandler.GetRms() * self.config.lip_sync.value, 1)
+        self.model.Draw()
 
     def onResize(self, ww: int, wh: int):
         self.model.Resize(ww, wh)
@@ -134,4 +136,3 @@ class Model(Scene.CallBackSet):
         self.motionFinished = False
         self.callbackSet.onPlaySound(group, no)
         self.callbackSet.onPlayText(group, no)
-

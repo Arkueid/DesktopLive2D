@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
-from PySide2.QtCore import QUrl, QCoreApplication
-from PySide2.QtMultimedia import QMediaPlayer
+from PySide6.QtCore import QUrl, QCoreApplication
+from PySide6.QtMultimedia import QMediaPlayer, QAudioOutput
 
 from config import Configuration
 from core.lock import Lockable
@@ -9,7 +9,6 @@ from utils import log
 
 
 class IAudioDevice(ABC):
-
     finished: bool
 
     @abstractmethod
@@ -37,14 +36,16 @@ class AudioDevice(IAudioDevice, Lockable):
         self.finished = True
         self.onFinishCallback = onFinishCallback
         self.audioPlayer.mediaStatusChanged.connect(self.__onFinished)
-        self.audioPlayer.setVolume(volumeConfig.volume.value)
+        self.audioOutput = QAudioOutput()
+        self.audioPlayer.setAudioOutput(self.audioOutput)
+        self.audioOutput.setVolume(volumeConfig.volume.value / 100)
         volumeConfig.volume.valueChanged.connect(self.setVolume)
 
     def isFinished(self) -> bool:
         return not self.isLocked() and self.finished
 
     def __onFinished(self, state):
-        if state == QMediaPlayer.EndOfMedia:
+        if state == QMediaPlayer.PlaybackState.StoppedState:
             self.finished = True
             log.info("sound finished")
             self.onFinishCallback()
@@ -53,16 +54,16 @@ class AudioDevice(IAudioDevice, Lockable):
     def play(self, audioPath: str) -> None:
         self.stop()
         self.finished = False
-        self.audioPlayer.setMedia(QUrl.fromLocalFile(audioPath))
+        self.audioPlayer.setSource(QUrl.fromLocalFile(audioPath))
         self.audioPlayer.play()
         log.info(f"play audio: {audioPath}")
 
     @Lockable.lock_decor
     def stop(self):
-        if self.audioPlayer.state() == QMediaPlayer.PlayingState:
+        if self.audioPlayer.playbackRate() == QMediaPlayer.PlaybackState.PlayingState:
             self.audioPlayer.stop()
             QCoreApplication.processEvents()
             self.finished = True
 
     def setVolume(self, v: int):
-        self.audioPlayer.setVolume(v)
+        self.audioOutput.setVolume(v / 100)

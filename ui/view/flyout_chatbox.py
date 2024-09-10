@@ -1,10 +1,9 @@
-from PySide2.QtCore import Qt, Signal
-from PySide2.QtGui import QColor, QKeySequence
-from PySide2.QtWidgets import QWidget, QHBoxLayout, QGraphicsDropShadowEffect, QAction, QShortcut
+from PySide6.QtCore import Qt, Signal
+from PySide6.QtGui import QColor, QKeySequence, QAction, QShortcut
+from PySide6.QtWidgets import QWidget, QHBoxLayout, QGraphicsDropShadowEffect
 from qfluentwidgets import isDarkTheme, FlyoutViewBase, LineEdit, ToolButton, PrimaryToolButton, FluentIcon
 
 from config import Configuration
-
 
 class FlyoutChatView(FlyoutViewBase):
 

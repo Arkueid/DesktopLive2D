@@ -1,7 +1,5 @@
 from enum import Enum
 
-from app import settings
-
 
 class AppMode(Enum):
     RELEASE = 1

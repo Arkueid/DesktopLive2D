@@ -1,6 +1,6 @@
 import uuid
 
-from PySide2.QtWidgets import QWidget, QHBoxLayout, QVBoxLayout
+from PySide6.QtWidgets import QWidget, QHBoxLayout, QVBoxLayout
 from qfluentwidgets import ExpandGroupSettingCard
 from qfluentwidgets import FluentIcon, BodyLabel, ComboBox, PrimaryToolButton, ToolButton, LineEdit, TextEdit, Dialog
 

@@ -1,7 +1,7 @@
 import uuid
 
-from PySide2.QtGui import QPainter, QColor, QPainterPath, QBrush
-from PySide2.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout
+from PySide6.QtGui import QPainter, QColor, QPainterPath, QBrush
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout
 from qfluentwidgets import StrongBodyLabel, BodyLabel, ComboBox, ToolButton, FluentIcon, PrimaryToolButton, Dialog
 
 from chat.data.entity import Message

@@ -1,7 +1,7 @@
 from abc import abstractmethod, ABC
 
-from PySide2.QtGui import QIcon, QCursor
-from PySide2.QtWidgets import QSystemTrayIcon, QAction
+from PySide6.QtGui import QIcon, QCursor, QAction
+from PySide6.QtWidgets import QSystemTrayIcon
 from qfluentwidgets import CheckableMenu
 
 from config import Configuration

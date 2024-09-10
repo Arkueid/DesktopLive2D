@@ -111,7 +111,7 @@ class Model3Json:
         if settings.LIVE2D_VERSION == define.Live2DVersion.V2:
             return MotionGroups(self.__meta[Key.MOTIONS])
         else:
-            return MotionGroups(self.__meta[Key.FILE_REFERENCES][Key.MOTIONS])
+            return MotionGroups(self.__meta[Key.FILE_REFERENCES].get(Key.MOTIONS, {}))
 
     def src_dir(self):
         return self.__src_dir

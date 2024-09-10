@@ -1,24 +1,25 @@
 import os
 import sys
+import threading as td
 
-from PySide2.QtCore import QObject, Signal, QTimer
-from PySide2.QtWidgets import QApplication
+from PySide6.QtCore import QObject, Signal, QTimer
+from PySide6.QtWidgets import QApplication
 from qfluentwidgets import qconfig, Flyout
 
 from app import live2d, settings
 from chat.client.baidu.qianfan import Qianfan
 from config.configuration import Configuration
+from core.audio_device import AudioDevice
+from core.chat_delegate import ChatDelegate
+from core.lipsync import globalWavHandler
+from core.model import Model, find_model_dir
+from core.popup_text import PopupText
 from ui.components.app_settings import AppSettings
 from ui.components.model_settings import ModelSettings
 from ui.view.flyout_chatbox import FlyoutChatBox
 from ui.view.scene import Scene
 from ui.view.settings import Settings
 from ui.view.systray import Systray
-from core.audio_device import AudioDevice
-from core.model import Model, find_model_dir
-from core.popup_text import PopupText
-from core.chat_delegate import ChatDelegate
-import threading as td
 
 
 class Signals(QObject):
@@ -168,10 +169,10 @@ class Application(
             )
 
     def onPlayText(self, group, no):
+        text: str = self.config.model3Json.motion_groups().group(group).motion(no).text()
+        if text is None or len(text.strip()) == 0: return
         self.popupText.fadeOut()
-        self.popupText.popup(
-            self.config.model3Json.motion_groups().group(group).motion(no).text(),
-        )
+        self.popupText.popup(text)
 
     def onMotionSoundFinished(self):
         self.popupText.fadeOut()
@@ -184,6 +185,7 @@ class Application(
         if not os.path.exists(path):
             return
         self.audioDevice.play(path)
+        globalWavHandler.Start(path)
 
     def isSoundFinished(self) -> bool:
         return self.audioDevice.isFinished()
