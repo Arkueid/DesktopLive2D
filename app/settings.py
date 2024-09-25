@@ -2,7 +2,7 @@ from app.define import AppMode, Live2DVersion
 
 APP_MODE = AppMode.DEBUG
 
-LIVE2D_VERSION = Live2DVersion.V3
+LIVE2D_VERSION = Live2DVersion.V2
 
 API_KEY = "uDTLTDFxtJZSTt93RlZsZupC"
 SECRET_KEY = "iOL7AdZldfwJVbCQ2hVrggrnIM5fS8RW"

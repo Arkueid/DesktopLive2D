@@ -2,4 +2,3 @@ pyside6
 pyside6-fluent-widgets
 requests~=2.32.3
 peewee~=3.17.5
-# Flask~=3.0.3

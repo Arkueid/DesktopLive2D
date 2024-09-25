@@ -58,6 +58,7 @@ class Scene(QOpenGLWidget):
         self.setWindowFlags(
             Qt.WindowType.Tool | Qt.WindowType.FramelessWindowHint
         )
+        self.setWindowTitle("com.arkueid.host")
 
     def setup(self, config: Configuration, callbackSet: CallBackSet):
         self.config = config

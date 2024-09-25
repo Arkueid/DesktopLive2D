@@ -45,7 +45,7 @@ class AudioDevice(IAudioDevice, Lockable):
         return not self.isLocked() and self.finished
 
     def __onFinished(self, state):
-        if state == QMediaPlayer.PlaybackState.StoppedState:
+        if state == QMediaPlayer.MediaStatus.EndOfMedia:
             self.finished = True
             log.info("sound finished")
             self.onFinishCallback()

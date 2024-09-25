@@ -207,7 +207,7 @@ class MotionEditorDesign(QWidget):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     m = Model3Json()
-    m.load("../../Resources/Haru/Haru.model3.json")
+    m.load("./Resources/v3/Haru/Haru.model3.json")
     window = MotionEditorDesign(m)
     window.show()
     sys.exit(app.exec())

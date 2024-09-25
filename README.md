@@ -17,13 +17,13 @@
 
 ## 预览
 
-2.0 版本模型：
+2.0 版本模型（仅win32，由于`qfluentwidgets`限制，支持最高32位 python 版本为`3.10.11+`）：
 ![v2](./images/v2.png)
 
-3.0 版本模型：
+3.0 版本模型（仓库中使用的`live2d-py`版本对应`python-win64-3.12.0+`，其他版本需要自行编译`live2d-py`）：
 ![v3](./images/v3.png)
 
-聊天功能：（目前使用百度千帆，使用其他大模型需要自行编写 `client`，继承 [chat/client/chat_client](./chat/client/chat_client.py) 中的 `ChatClientWithCache`，并在 [app/settings.py](./app/settings.py) 中替换 `CHAT_CLIENT`。
+聊天功能：（目前使用百度千帆，使用其他大模型需要自行编写 `client`，继承 [chat/client/chat_client](./chat/client/chat_client.py) 中的 `ChatClientWithCache`。
 
 ![chat-send](./images/chat-send.png)
 

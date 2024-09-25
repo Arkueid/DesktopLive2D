@@ -4,7 +4,7 @@
         "drawX": 0.0,
         "drawY": 0.0,
         "lip_sync": 1.0,
-        "name": "Haru",
+        "name": "nn",
         "motion_interval": 10,
         "resource_dir": "Resources/v3",
         "scale": 1.0
@@ -26,12 +26,12 @@
     },
     "scene": {
         "fps": 30,
-        "height": 500,
-        "lastX": 942,
-        "lastY": 505,
+        "height": 400,
+        "lastX": 940,
+        "lastY": 508,
         "stay_on_top": false,
         "visible": true,
-        "width": 400
+        "width": 340
     },
     "systray": {
         "icon": "Resources/icon.png"
