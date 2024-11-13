@@ -59,8 +59,7 @@ class KizunaImpl(Kizuna):
         return words.strip()
 
     def doReaction(self, waifu, words) -> str:
-        """io 线程中执行"""
-        # 模拟网络请求
+        """该函数将会在 io 线程 (kizuna looper) 中执行"""
         mm: Moment = waifu.currentMoment
         chara_settings = [
             {
