@@ -41,7 +41,7 @@ class InputManagerImpl(InputManager):
             if dx > 2 or dy > 2:  # 防止移动窗口时触发 对话框
                 self.moved = True
 
-    def dispatchMouseButtonEvent(self, window, button, action, mods):
+    def dispatchMouseButtonEvent(self, _, button, action, __):
         if action == glfw.RELEASE:
             if not self.moved:
                 x, y = glfw.get_cursor_pos(self.handle)

@@ -39,9 +39,6 @@ class Scene(View):
         drawPos.observe(lambda pos: self.model.SetOffset(pos[0], pos[1]) if self.model else None)
         scale.observe(lambda s: self.model.SetScale(s) if self.model else None)
 
-    def onInitialize(self):
-        pass
-
     def install(self, m):
         if isinstance(m, ModelManager):
             m.setScene(self)

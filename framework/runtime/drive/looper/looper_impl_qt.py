@@ -1,19 +1,16 @@
-import sys
-import threading
-
 from PySide6.QtCore import QTimer
 from PySide6.QtWidgets import QApplication
-from pygame.threads import Thread
 
 from framework.handler.looper import Looper
 from framework.handler.message import Message
+from framework.runtime.drive.window.gal_dialog_qt import GalDialog
 from framework.runtime.drive.window.kizuna_link import KizunaLink
 from framework.runtime.drive.window.settings.settings import Settings
 from framework.utils import log
 
 
 class QtLooper(Looper):
-    name = "QtLooper"
+    name = "qt"
 
     def __init__(self):
         super().__init__(self.name, manualStart=True)
@@ -35,7 +32,7 @@ class QtLooper(Looper):
             msg = self.mq.get()
 
     def loop(self, appConfig):
-        self.app = QApplication(sys.argv)
+        self.app = QApplication()
 
         kizuna_init_msg = self.mq.getOrBlock()
 
@@ -44,14 +41,21 @@ class QtLooper(Looper):
         kizuna_init_msg.handle(kl)
         kizuna_init_msg.recycle()
 
-        log.Info("[QtLooper]Kizuna init")
+        log.Info("[QtLooper] Kizuna link init")
 
         setting = Settings(appConfig)
         setting_init_msg = self.mq.getOrBlock()
         setting_init_msg.handle(setting)
         setting_init_msg.recycle()
 
-        log.Info("[QtLooper]Setting init")
+        log.Info("[QtLooper] Setting init")
+
+        dialog = GalDialog()
+        dialog_init_msg = self.mq.getOrBlock()
+        dialog_init_msg.handle(dialog)
+        dialog_init_msg.recycle()
+
+        log.Info("[QtLooper] GalDialog init")
 
         # 开启事件处理
         timer = QTimer()
@@ -59,3 +63,7 @@ class QtLooper(Looper):
         timer.start(100)
 
         self.app.exec()
+
+        timer.stop()
+
+        log.Info("[QtLooper] shutdown")

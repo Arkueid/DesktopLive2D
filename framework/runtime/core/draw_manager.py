@@ -17,8 +17,6 @@ class DrawManager(Manager, ABC):
         self.fps = fps
 
         self.doInitialize()
-        for d in self.__drawables:
-            d.onInitialize()
 
     @abstractmethod
     def dispose(self):

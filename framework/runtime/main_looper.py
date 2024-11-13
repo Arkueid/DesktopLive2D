@@ -3,6 +3,7 @@ from typing import Callable
 from framework.runtime.core.draw_manager import DrawManager
 from framework.runtime.core.input_manager import InputManager
 from framework.handler.looper import Looper
+from framework.utils import log
 
 
 class MainLooper(Looper):
@@ -27,14 +28,11 @@ class MainLooper(Looper):
         if beforeStart:
             beforeStart()
 
-        while True:
+        while not self.shouldExit:
             dm.beforeDraw()
             im.processInput()
 
             self.handleMessages()
-
-            if self.shouldExit:
-                break
 
             dm.clearBuffer()
             dm.onDraw()
@@ -42,6 +40,8 @@ class MainLooper(Looper):
 
         if afterEnd:
             afterEnd()
+
+        log.Info("[MainLooper] shutdown")
 
     def shutdown(self):
         self.shouldExit = True

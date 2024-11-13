@@ -111,6 +111,7 @@ class InputManager(Manager, ABC):
         # 过滤鼠标点击事件
         if (event.type == Mouse.Event.PRESS or event.type == Mouse.Event.RELEASE) and not self.clickEnable.value:
             return
+
         msg = Message.obtain()
         msg.data = event
         self.__handler.post(msg)

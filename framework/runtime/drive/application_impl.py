@@ -18,7 +18,6 @@ from framework.runtime.drive.model_manager_impl import ModelManagerImpl
 from framework.runtime.drive.sound_manager_impl import SoundManagerImpl
 from framework.runtime.drive.setting_manager_impl import SettingManagerImpl
 from framework.runtime.drive.text_manager_impl import TextManagerImpl
-from framework.runtime.drive.looper.looper_impl_tk import TkLooper
 from framework.runtime.drive.window_manager_impl import WindowManagerImpl
 from framework.runtime.main_looper import MainLooper
 from framework.runtime.scene import Scene
@@ -35,7 +34,6 @@ class ApplicationImpl(Application):
         self.tm: TextManager | None = None
         self.kizuna: Kizuna | None = None
         self.mainLooper: MainLooper | None = None
-        self.tkLooper: TkLooper | None = None
         self.qtLooper: QtLooper | None = None
         self.appConfig: Configuration | None = None
 
@@ -48,8 +46,6 @@ class ApplicationImpl(Application):
 
         # 创建主循环
         self.mainLooper = MainLooper()
-        # 创建tk线程(主线程
-        self.tkLooper = TkLooper()
         # 创建qt线程
         self.qtLooper = QtLooper()
 
@@ -81,7 +77,7 @@ class ApplicationImpl(Application):
 
         self.wm.initialize()  # 初始化窗口服务
         self.sm.initialize(self.appConfig.volume)  # 初始化音频服务
-        self.tm.initialize(self.appConfig.windowPos, self.appConfig.windowSize)  # 初始化 tk 服务
+        self.tm.initialize(self.appConfig.windowPos, self.appConfig.windowSize)  # 初始化对话框服务
 
         scene = Scene(
             self.appConfig.motionInterval,
@@ -119,23 +115,21 @@ class ApplicationImpl(Application):
             self.appConfig.trackEnable,
         )
 
-        # 依赖 model manager
-        self.qtLooper.start(self.appConfig)
-
     def afterEnd(self):
         """主线程中，主循环结束后执行"""
         self.wm.dispose()
         self.mm.dispose()
         self.stm.dispose()
-        self.tkLooper.shutdown()
+        self.qtLooper.shutdown()
 
     def start(self):
         # 实际上是叫做 main looper 的子线程
         # 在此我们称为主循环
         self.mainLooper.start(self.im, self.dm, self.beforeStart, self.afterEnd)
 
-        # 实际上是当前进程的直接主线程，也就是主线程
-        self.tkLooper.loop()
+        # 实际上是当前进程的直接子线程，也就是主线程
+        # 依赖 model manager
+        self.qtLooper.loop(self.appConfig)
 
         self.exit()
 

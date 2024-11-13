@@ -1,4 +1,3 @@
-from Demos.security.sspi.socket_server import serve
 from PIL import Image, ImageDraw
 from pystray import MenuItem, Menu, Icon
 

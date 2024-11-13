@@ -5,6 +5,7 @@ from logging import warning
 from threading import RLock
 
 from framework.constant.waifu import DefaultWaifu
+from framework.live_data.live_data import LiveData
 from framework.runtime.core.kizuna.hitokoto import Hitokoto
 from framework.runtime.core.kizuna.moment import Moment
 
@@ -27,6 +28,8 @@ class Waifu:
         # runtime attr
         # current moment
         self.cMid = None
+        self.onTell = LiveData(None)
+        self.onRethink = LiveData(None)
 
     def __str__(self):
         return (f"Waifu(\n\tname={self.name},\n"
@@ -56,6 +59,8 @@ class Waifu:
             )
         )
 
+        self.onTell.value = ("me", words)
+
     def rethink(self, words):
         if self.cMid is None:
             raise RuntimeError("current moment not set, call `recall` first")
@@ -69,6 +74,8 @@ class Waifu:
                 True
             )
         )
+
+        self.onRethink.value = (self.name, words)
 
     @classmethod
     def __initDirs(cls, obj):
@@ -89,12 +96,15 @@ class Waifu:
             return True, mm_dir
 
     @classmethod
-    def __create(cls, name, desc, greeting):
+    def __create(cls, name, desc, greeting, home=None):
         obj = cls()
         obj.name = name
         obj.desc = desc
         obj.greeting = greeting
-        obj.home = os.path.join(cls.WAIFUS_HOME, obj.name)
+        if home:
+            obj.home = home
+        else:
+            obj.home = os.path.join(Waifu.WAIFUS_HOME, name)
         obj.moments = dict()
 
         ret, mm_dir = Waifu.__initDirs(obj)
@@ -113,11 +123,11 @@ class Waifu:
         info_path = os.path.join(homeDir, "info.json")
         with open(info_path, "r", encoding="utf-8") as f:
             d = json.load(f)
-            obj = Waifu.__create(d["name"], d["desc"], d["greeting"])
+            obj = Waifu.__create(d["name"], d["desc"], d["greeting"], homeDir)
         return obj
 
     @classmethod
-    def create(cls, name, desc, greeting):
+    def create(cls, name, desc, greeting, home=None):
         if name == Waifu.__default.name:
             return Waifu.__default
 
@@ -135,7 +145,10 @@ class Waifu:
 
         obj.desc = desc
         obj.greeting = greeting
-        obj.home = os.path.join(cls.WAIFUS_HOME, name)
+        if home:
+            obj.home = home
+        else:
+            obj.home = os.path.join(cls.WAIFUS_HOME, name)
         obj.moments = dict()
 
         ret, mm_dir = Waifu.__initDirs(obj)
@@ -154,7 +167,7 @@ class Waifu:
         info_path = os.path.join(homeDir, "info.json")
         with open(info_path, "r", encoding="utf-8") as f:
             d = json.load(f)
-            obj = cls.create(d["name"], d["desc"], d["greeting"])
+            obj = cls.create(d["name"], d["desc"], d["greeting"], homeDir)
 
         return obj
 

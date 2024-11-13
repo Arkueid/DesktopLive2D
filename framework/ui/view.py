@@ -9,9 +9,6 @@ class View(Drawable, Clickable):
     def __init__(self):
         self.window = None
 
-    def onInitialize(self):
-        pass
-
     @abstractmethod
     def onResize(self, w: int, h: int):
         pass

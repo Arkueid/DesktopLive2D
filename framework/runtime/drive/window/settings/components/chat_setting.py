@@ -2,6 +2,7 @@ from PySide6.QtWidgets import QWidget, QHBoxLayout, QVBoxLayout
 from qfluentwidgets import ExpandGroupSettingCard, MessageBox
 from qfluentwidgets import FluentIcon, BodyLabel, ComboBox, PrimaryToolButton, ToolButton, LineEdit, TextEdit
 
+from framework.handler.message import Message
 from framework.live_data.live_data import LiveData
 from framework.runtime.core.kizuna.waifu import Waifu
 from framework.runtime.drive.window.settings.components.base_designs import ScrollDesign
@@ -42,9 +43,8 @@ class WaifuSettings(ScrollDesign, IconDesign):
         self.label_charaId = BodyLabel("name")
         self.label_charaProfile = BodyLabel("desc")
         self.label_charaGreeting = BodyLabel("greeting")
-        self.charaName = LineEdit()
+        self.charaName = BodyLabel()
         self.charaName.setFixedHeight(60)
-        self.charaName.textChanged.connect(self.onCharaNameChanged)
         self.charaProfile = TextEdit()
         self.charaProfile.setFixedHeight(200)
         self.charaProfile.textChanged.connect(self.onCharaProfileChanged)
@@ -78,11 +78,7 @@ class WaifuSettings(ScrollDesign, IconDesign):
 
         self.charaSelector.currentTextChanged.connect(self.onCharaChanged)
 
-    def onCharaNameChanged(self):
-        self.waifu.value.name = self.charaName.text()
-
     def onCharaChanged(self, v):
-        self.charaName.textChanged.disconnect(self.onCharaNameChanged)
         self.charaProfile.textChanged.disconnect(self.onCharaProfileChanged)
         self.charaGreeting.textChanged.disconnect(self.onCharaGreetingChanged)
 
@@ -100,7 +96,6 @@ class WaifuSettings(ScrollDesign, IconDesign):
 
             self.waifu.value = waifu
 
-        self.charaName.textChanged.connect(self.onCharaNameChanged)
         self.charaProfile.textChanged.connect(self.onCharaProfileChanged)
         self.charaGreeting.textChanged.connect(self.onCharaGreetingChanged)
 
@@ -113,6 +108,10 @@ class WaifuSettings(ScrollDesign, IconDesign):
     def onAddChara(self):
         name, ok = InputDialog.getText(self, "Waifu Setting", "waifu name")
         if not ok:
+            return
+
+        if name in Waifu.waifus():
+            MessageBox(f"{name}", f"I'm already here!!!", self).exec()
             return
 
         Waifu.create(

@@ -1,8 +1,8 @@
 {
     "modelInfo": {
-        "name": "Hiyori",
+        "name": "nn",
         "version": 3,
-        "jsonPath": "./Resources\\v3\\Hiyori\\Hiyori.model3.json"
+        "jsonPath": "./Resources/v3/nn/nn.model3.json"
     },
     "resourceDir": "./Resources",
     "motionInterval": 10,
@@ -14,16 +14,16 @@
     "scale": 1.0,
     "clickTransparent": false,
     "clickEnable": true,
-    "trackEnable": false,
+    "trackEnable": true,
     "stayOnTop": false,
     "visible": true,
     "windowSize": [
-        120,
+        200,
         300
     ],
     "windowPos": [
-        598,
-        391
+        121,
+        624
     ],
     "fps": 30,
     "iconPath": null,

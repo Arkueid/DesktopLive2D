@@ -83,15 +83,21 @@ class MessageArchive(QWidget):
         self.addBtn.released.connect(self.onAddMoment)
         self.deleteBtn.released.connect(self.onDeleteMoment)
 
-        waifu.observe(self.onMomentsChanged)
-
         self.waifu = waifu.value
 
+        waifu.observe(self.onMomentsChanged)
+
     def onMomentsChanged(self, waifu):
+        if self.waifu:
+            self.waifu.onTell.unobserve(self.addMsg)
+            self.waifu.onRethink.unobserve(self.addMsg)
+
         self.chatSelector.currentTextChanged.disconnect(self.onMomentChange)
         self.chatSelector.clear()
 
         self.waifu = waifu
+        self.waifu.onTell.observe(self.addMsg, False)
+        self.waifu.onRethink.observe(self.addMsg, False)
 
         for i in waifu.mids:
             self.chatSelector.addItem(i, None)
@@ -102,6 +108,9 @@ class MessageArchive(QWidget):
         self.onMomentChange(mid)
 
         self.chatSelector.currentTextChanged.connect(self.onMomentChange)
+
+    def addMsg(self, msg):
+        self.addItem(MessageItemView(msg[0], msg[1]))
 
     def addItem(self, itemView: MessageItemView):
         self.messageList.addMessageItem(itemView)
