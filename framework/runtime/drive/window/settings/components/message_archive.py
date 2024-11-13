@@ -1,6 +1,7 @@
 from PySide6.QtGui import QPainter, QColor, QPainterPath, QBrush
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout
-from qfluentwidgets import StrongBodyLabel, BodyLabel, ComboBox, ToolButton, FluentIcon, PrimaryToolButton, MessageBox
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QListWidgetItem
+from qfluentwidgets import StrongBodyLabel, BodyLabel, ComboBox, ToolButton, FluentIcon, PrimaryToolButton, MessageBox, \
+    ListWidget
 
 from framework.live_data.live_data import LiveData
 from framework.runtime.drive.window.settings.components.base_designs import ScrollDesign
@@ -14,7 +15,9 @@ class MessageItemView(QWidget):
 
         title = StrongBodyLabel()
         title.setText(sender)
+        title.setStyleSheet("background-color: rgba(255, 255, 255, 0)")
         body = BodyLabel()
+        body.setStyleSheet("background-color: rgba(255, 255, 255, 0)")
         body.setWordWrap(True)
         body.setText(content)
 
@@ -23,40 +26,38 @@ class MessageItemView(QWidget):
 
         self.setLayout(self.vBoxLayout)
 
-    def paintEvent(self, event):
-        painter = QPainter(self)
-        path = QPainterPath()
-        path.addRoundedRect(self.rect(), 10, 10)
-        painter.fillPath(path, QBrush(QColor(255, 255, 255, 255)))
+    # def paintEvent(self, event):
+    #     painter = QPainter(self)
+    #     path = QPainterPath()
+    #     path.addRoundedRect(self.rect(), 10, 10)
+    #     painter.fillPath(path, QBrush(QColor(255, 255, 255, 255)))
 
 
-class MessageList(ScrollDesign):
+class MessageList(ListWidget):
 
     def __init__(self):
         super().__init__()
-        self.vBoxLayout.setContentsMargins(0, 0, 0, 0)
+        self.setContentsMargins(0, 0, 0, 0)
 
     def addMessageItem(self, itemView: MessageItemView):
-        self.vBoxLayout.addWidget(itemView)
+        item = QListWidgetItem()
+        self.addItem(item)
+        item.setSizeHint(itemView.vBoxLayout.sizeHint())
+        self.setItemWidget(item, itemView)
 
     def clearMessageItems(self):
-        item = self.vBoxLayout.takeAt(0)
-        while item:
-            if item.widget():
-                self.vBoxLayout.removeWidget(item.widget())
-                item.widget().deleteLater()
-            del item
-            item = self.vBoxLayout.takeAt(0)
+        self.clear()
 
     def addBottomStretch(self):
-        self.vBoxLayout.addStretch(1)
+        # self.vBoxLayout.addStretch(1)
+        pass
 
 
 class MessageArchive(QWidget):
 
     def __init__(self, waifu: LiveData):
         super().__init__()
-        self.setMinimumHeight(450)
+        self.setFixedHeight(450)
         self.setStyleSheet("QWidget{background-color: white}")
         vbox = QVBoxLayout()
         line1 = QHBoxLayout()

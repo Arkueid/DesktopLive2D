@@ -62,7 +62,6 @@ class WaifuSettings(ScrollDesign, IconDesign):
         setting_card.addGroupWidget(frame)
 
         setting_card2 = ExpandGroupSettingCard(FluentIcon.HISTORY, "Moments")
-
         self.messageArchive = MessageArchive(waifu)
 
         setting_card2.addGroupWidget(self.messageArchive)
