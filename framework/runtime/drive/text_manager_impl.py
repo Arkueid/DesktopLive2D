@@ -43,8 +43,13 @@ class TextManagerImpl(TextManager):
             self.anchorW, self.anchorH = wSize
 
         if self.dialog:
-            self.__qtHandler.post(lambda: self.dialog.move_from_thread(self.anchorX, self.anchorY, self.anchorW, self.anchorH))
+            self.__qtHandler.post(
+                lambda: self.dialog.move_from_thread(self.anchorX, self.anchorY, self.anchorW, self.anchorH))
 
     def popup(self, chara: str, text: str, delay: float = 2):
-        self.__qtHandler.post(lambda: self.dialog.trigger_from_thread(text, self.anchorX, self.anchorY, self.anchorW, self.anchorH))
+        self.__qtHandler.post(
+            lambda: self.dialog.trigger_from_thread(text, self.anchorX, self.anchorY, self.anchorW, self.anchorH))
         log.Info(f"[TextManager] popup")
+
+    def isFinished(self):
+        return self.dialog is not None and not self.dialog.isVisible()

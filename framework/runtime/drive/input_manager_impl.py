@@ -67,4 +67,4 @@ class InputManagerImpl(InputManager):
             self.lastClickAtX, self.lastClickAtY = glfw.get_cursor_pos(self.handle)
 
     def makeTransparent(self, value):
-        glfw.set_input_mode(self.handle, glfw.STICKY_MOUSE_BUTTONS, glfw.TRUE if value else glfw.FALSE)
+        pass

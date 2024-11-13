@@ -15,7 +15,7 @@
     "clickTransparent": false,
     "clickEnable": true,
     "trackEnable": true,
-    "stayOnTop": false,
+    "stayOnTop": true,
     "visible": true,
     "windowSize": [
         200,

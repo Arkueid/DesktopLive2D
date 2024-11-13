@@ -77,6 +77,19 @@ class Scene(View):
         if updated:
             self.model.SetLipSync(rms * self.lipSyncN.value)
 
+        # 自动播放 idle 动作组
+        # -1 禁止自动播放
+        if self.motionInterval.value < 0:
+            return
+
+        ct = time.time()
+        if self.isFinished() and self.lastMotionEndAt < 0:
+            self.lastMotionEndAt = time.time()
+
+        if self.lastMotionEndAt > 0 and ct - self.lastMotionEndAt > self.motionInterval.value:
+            self.lastMotionEndAt = -1
+            self.model.StartRandomMotion("Idle", 1, self.onMotionStart)
+
     def onDraw(self):
         if self.model is None:
             return
@@ -85,6 +98,10 @@ class Scene(View):
 
     def onPressed(self, button, x: int, y: int) -> bool:
         return True
+
+    def isFinished(self):
+        """动作、音频、文本全部播放完毕"""
+        return self.model.IsMotionFinished() and self.tm.isFinished() and self.sm.isFinished()
 
     def onMotionStart(self, name: str, nr: int):
         motion = self.model.modelJson.motion_groups().group(name).motion(nr)
