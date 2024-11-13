@@ -2,7 +2,7 @@ import live2d.v3 as l2d_v3
 from framework.runtime.core.model import Model
 from framework.runtime.core.model_manager import ModelManager
 from framework.runtime.drive.model_impl import ModelImpl
-from framework.runtime.model_info import ModelInfo
+from framework.runtime.core.model_info import ModelInfo
 
 
 class ModelManagerImpl(ModelManager):

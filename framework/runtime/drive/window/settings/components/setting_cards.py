@@ -6,7 +6,7 @@ from PySide6.QtGui import QIcon
 from qfluentwidgets import *
 
 from framework.live_data.live_data import LiveData, RangeLiveData
-from framework.runtime.model_info import ModelInfo
+from framework.runtime.core.model_info import ModelInfo
 
 
 class StyledSettingCard(SettingCard):

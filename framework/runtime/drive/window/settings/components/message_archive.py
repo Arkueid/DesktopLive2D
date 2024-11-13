@@ -1,10 +1,9 @@
-from PySide6.QtGui import QPainter, QColor, QPainterPath, QBrush
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QListWidgetItem
 from qfluentwidgets import StrongBodyLabel, BodyLabel, ComboBox, ToolButton, FluentIcon, PrimaryToolButton, MessageBox, \
     ListWidget
 
+from framework.handler.looper import Looper
 from framework.live_data.live_data import LiveData
-from framework.runtime.drive.window.settings.components.base_designs import ScrollDesign
 
 
 class MessageItemView(QWidget):
@@ -26,12 +25,6 @@ class MessageItemView(QWidget):
 
         self.setLayout(self.vBoxLayout)
 
-    # def paintEvent(self, event):
-    #     painter = QPainter(self)
-    #     path = QPainterPath()
-    #     path.addRoundedRect(self.rect(), 10, 10)
-    #     painter.fillPath(path, QBrush(QColor(255, 255, 255, 255)))
-
 
 class MessageList(ListWidget):
 
@@ -47,10 +40,6 @@ class MessageList(ListWidget):
 
     def clearMessageItems(self):
         self.clear()
-
-    def addBottomStretch(self):
-        # self.vBoxLayout.addStretch(1)
-        pass
 
 
 class MessageArchive(QWidget):
@@ -97,7 +86,9 @@ class MessageArchive(QWidget):
         self.chatSelector.clear()
 
         self.waifu = waifu
+        self.waifu.onTell.observeOn(Looper.getLooper("qt"))
         self.waifu.onTell.observe(self.addMsg, False)
+        self.waifu.onRethink.observeOn(Looper.getLooper("qt"))
         self.waifu.onRethink.observe(self.addMsg, False)
 
         for i in waifu.mids:
@@ -130,7 +121,6 @@ class MessageArchive(QWidget):
         for h in self.waifu.currentMoment.hitokotos:
             view = MessageItemView(h.who, h.words)
             self.messageList.addMessageItem(view)
-        self.messageList.addBottomStretch()
 
     def onAddMoment(self):
         mid = self.waifu.newMoment()

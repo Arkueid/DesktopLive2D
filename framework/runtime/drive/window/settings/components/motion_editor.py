@@ -7,10 +7,9 @@ from PySide6.QtWidgets import (
 from qfluentwidgets import TreeWidget, TextEdit, BodyLabel, RoundMenu, \
     FluentIcon, Action, SplitPushButton
 
-from framework.constant import Live2DVersion
 from framework.live_data.live_data import LiveData
-from framework.utils.model_json import MotionGroups, ModelJson, Motion, MotionGroup
 from framework.runtime.drive.window.settings.components.dialogs import InputDialog, Dialog
+from framework.utils.model_json import ModelJson, Motion, MotionGroup
 
 
 class MotionEditor(QWidget):
@@ -46,7 +45,8 @@ class MotionEditor(QWidget):
         self.setLayout(vbox)
         vbox.addWidget(splitter)
 
-        self.playMotionFunc = lambda group, idx: print(f"[Motion Editor]play motion: [{group}_{idx}]")
+        # TODO find a better way
+        self.playMotionFunc = lambda group, idx: modelInfo.value.mm.startMotion(group, idx, 3)
 
         splitter.setSizes([300, 600])
 

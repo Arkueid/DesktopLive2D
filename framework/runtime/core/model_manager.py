@@ -6,7 +6,7 @@ from framework.constant import Live2DVersion
 from framework.live_data.live_data import LiveData
 from framework.runtime.core.manager import Manager
 from framework.runtime.core.model import Model
-from framework.runtime.model_info import ModelInfo
+from framework.runtime.core.model_info import ModelInfo
 
 
 def find_model_dir(version: Live2DVersion, path: str) -> list[ModelInfo]:
@@ -47,8 +47,16 @@ class ModelManager(Manager, ABC):
         self.__currentModel: Model | None = None
         self.__currentModelInfo: LiveData | None = None
 
+    @property
+    def currentModel(self):
+        return self.__currentModel
+
     def setScene(self, scene):
         self.__scene = scene
+
+    def startMotion(self, group, no, priority):
+        self.__currentModel.StartMotion(group, no, priority)
+        self.__scene.onMotionStart(group, no)
 
     def initialize(self, resourceDir: str, modelInfo: LiveData):
         self.doInitialize()
