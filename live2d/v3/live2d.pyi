@@ -240,8 +240,20 @@ class LAppModel:
         """
         pass
 
-    def GetParameterCount() -> int:
+    def GetParameterCount(self) -> int:
         pass
 
-    def GetParameter(index: int) -> Parameter:
+    def GetParameter(self, index: int) -> Parameter:
+        pass
+
+    def GetPartCount(self) -> int:
+        pass
+
+    def GetPartId(self, index: int) -> str:
+        pass
+
+    def GetPartIds(self) -> list[str]:
+        pass
+
+    def SetPartOpacity(self, index: int, opacity: float) -> None:
         pass

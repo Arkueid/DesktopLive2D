@@ -1,0 +1,32 @@
+{
+    "modelInfo": {
+        "name": "nn",
+        "version": 3,
+        "jsonPath": "../../../../Resources\\v3\\nn\\nn.model3.json"
+    },
+    "resourceDir": "../../../../Resources",
+    "motionInterval": 30,
+    "drawPos": [
+        0.09,
+        -0.05
+    ],
+    "lipSyncN": 1.05,
+    "scale": 1.0,
+    "clickTransparent": false,
+    "clickEnable": false,
+    "trackEnable": true,
+    "stayOnTop": false,
+    "visible": true,
+    "windowSize": [
+        230,
+        300
+    ],
+    "windowPos": [
+        600,
+        800
+    ],
+    "fps": 60,
+    "iconPath": null,
+    "volume": 38,
+    "waifu": "waifus\\咲き"
+}

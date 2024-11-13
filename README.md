@@ -23,7 +23,7 @@
 3.0 版本模型（仓库中使用的`live2d-py`版本对应`python-win64-3.12.0+`，其他版本需要自行编译`live2d-py`）：
 ![v3](./images/v3.png)
 
-聊天功能：（目前使用百度千帆，使用其他大模型需要自行编写 `client`，继承 [chat/client/chat_client](./chat/client/chat_client.py) 中的 `ChatClientWithCache`。
+聊天功能：（目前使用百度千帆，使用其他大模型需要自行编写 `client`，继承 [chat/client/chat_client](old/chat/client/chat_client.py) 中的 `ChatClientWithCache`。
 
 ![chat-send](./images/chat-send.png)
 
@@ -104,7 +104,7 @@ pip install -r requirements.txt
 
 3. 设置版本
 
-在 [app/settings.py](./app/settings.py) 中设置 `APP_MODE` 变量和 `LIVE2D_VERSION` 变量，来配置是否打印执行信息，切换支持的 live2d 模型版本。
+在 [app/settings.py](old/app/settings.py) 中设置 `APP_MODE` 变量和 `LIVE2D_VERSION` 变量，来配置是否打印执行信息，切换支持的 live2d 模型版本。
 
 4. 运行 `main.py`
 

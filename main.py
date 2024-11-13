@@ -1,16 +1,9 @@
-from application import Application
+from framework.runtime.application import Application
+from framework.runtime.drive.application_impl import ApplicationImpl
 
 
 def main():
-    app = Application()
-
-    app.load_config()
-
-    app.setup()
-
-    app.start()
-
-    app.save_config()
+    Application.launch(ApplicationImpl())
 
 
 if __name__ == "__main__":

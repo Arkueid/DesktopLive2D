@@ -1,0 +1,32 @@
+{
+    "modelInfo": {
+        "name": "Hiyori",
+        "version": 3,
+        "jsonPath": "./Resources\\v3\\Hiyori\\Hiyori.model3.json"
+    },
+    "resourceDir": "./Resources",
+    "motionInterval": 10,
+    "drawPos": [
+        0,
+        0
+    ],
+    "lipSyncN": 1.0,
+    "scale": 1.0,
+    "clickTransparent": false,
+    "clickEnable": true,
+    "trackEnable": false,
+    "stayOnTop": false,
+    "visible": true,
+    "windowSize": [
+        120,
+        300
+    ],
+    "windowPos": [
+        598,
+        391
+    ],
+    "fps": 30,
+    "iconPath": null,
+    "volume": 100,
+    "waifu": "waifus\\户山香澄"
+}
