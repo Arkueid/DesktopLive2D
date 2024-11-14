@@ -10,7 +10,7 @@ from framework.runtime.core.model import Model
 from framework.runtime.core.model_manager import ModelManager
 from framework.runtime.core.sound_manager import SoundManager
 from framework.runtime.core.text_manager import TextManager
-from framework.runtime.core.window_manager import Window
+from framework.ui.window import Window
 from framework.ui.view import View
 
 
@@ -137,4 +137,4 @@ class Scene(View):
         return True
 
     def onAttach(self, w: Window):
-        self.onResize(w.ww, w.wh)
+        self.onResize(w.width, w.height)

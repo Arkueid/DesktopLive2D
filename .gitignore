@@ -6,6 +6,8 @@ testenv
 .idea
 *.db
 
+temp
+
 waifus
 
 access_token.json

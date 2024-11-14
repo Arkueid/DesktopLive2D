@@ -4,7 +4,9 @@ from PySide6.QtWidgets import QApplication
 from framework.handler.looper import Looper
 from framework.handler.message import Message
 from framework.runtime.drive.window.gal_dialog_qt import GalDialog
+from framework.runtime.drive.window.glfw_window import GlfwWindow
 from framework.runtime.drive.window.kizuna_link import KizunaLink
+from framework.runtime.drive.window.qglw import QGLW
 from framework.runtime.drive.window.settings.settings import Settings
 from framework.utils import log
 
@@ -35,7 +37,6 @@ class QtLooper(Looper):
         self.app = QApplication()
 
         kizuna_init_msg = self.mq.getOrBlock()
-
         kl = KizunaLink()
         kl.receiver = kizuna_init_msg.data
         kizuna_init_msg.handle(kl)
@@ -43,19 +44,22 @@ class QtLooper(Looper):
 
         log.Info("[QtLooper] Kizuna link init")
 
-        setting = Settings(appConfig)
-        setting_init_msg = self.mq.getOrBlock()
-        setting_init_msg.handle(setting)
-        setting_init_msg.recycle()
-
-        log.Info("[QtLooper] Setting init")
-
         dialog = GalDialog()
         dialog_init_msg = self.mq.getOrBlock()
         dialog_init_msg.handle(dialog)
         dialog_init_msg.recycle()
 
         log.Info("[QtLooper] GalDialog init")
+
+        mm_init_fi_msg = self.mq.getOrBlock()
+        mm_init_fi_msg.recycle()
+
+        setting = Settings(appConfig)
+        setting_init_msg = self.mq.getOrBlock()
+        setting_init_msg.handle(setting)
+        setting_init_msg.recycle()
+
+        log.Info("[QtLooper] Setting init")
 
         # 开启事件处理
         timer = QTimer()

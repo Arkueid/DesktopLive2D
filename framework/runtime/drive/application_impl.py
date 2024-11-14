@@ -67,14 +67,6 @@ class ApplicationImpl(Application):
             self.appConfig.windowSize
         )
 
-        self.stm.initialize(
-            self.appConfig.clickTransparent,
-            self.appConfig.clickEnable,
-            self.appConfig.trackEnable,
-            self.appConfig.stayOnTop,
-            self.appConfig.visible
-        )
-
         self.wm.initialize()  # 初始化窗口服务
         self.sm.initialize(self.appConfig.volume)  # 初始化音频服务
         self.tm.initialize(self.appConfig.windowPos, self.appConfig.windowSize)  # 初始化对话框服务
@@ -100,12 +92,19 @@ class ApplicationImpl(Application):
         scene.install(self.dm)
         scene.install(self.sm)
         scene.install(self.tm)
-        # TODO handle
         scene.install(self.kizuna)
 
         self.dm.initialize(self.appConfig.fps)
         # 模型文件夹不能更改，传固定值
         self.mm.initialize(self.appConfig.resourceDir.value, self.appConfig.modelInfo)
+        # 依赖 mm
+        self.stm.initialize(
+            self.appConfig.clickTransparent,
+            self.appConfig.clickEnable,
+            self.appConfig.trackEnable,
+            self.appConfig.stayOnTop,
+            self.appConfig.visible
+        )
 
         self.im.initialize(
             self.mainLooper,

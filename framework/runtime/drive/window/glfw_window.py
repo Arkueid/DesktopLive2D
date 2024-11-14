@@ -3,7 +3,7 @@ from OpenGL.raw.GL.VERSION.GL_1_0 import glViewport
 
 from framework.handler.handler import Handler
 from framework.live_data.live_data import LiveData
-from framework.runtime.core.window_manager import Window
+from framework.ui.window import Window
 from framework.handler.looper import Looper
 
 
@@ -15,14 +15,13 @@ class GlfwWindow(Window):
 
         # 透明窗体支持
         glfw.window_hint(glfw.TRANSPARENT_FRAMEBUFFER, glfw.TRUE)
-        self.handle = glfw.create_window(self.ww, self.wh, self.title, None, None)
+        self.handle = glfw.create_window(self.width, self.height, self.title, None, None)
         glfw.make_context_current(self.handle)
         glfw.set_window_attrib(self.handle, glfw.DECORATED, glfw.FALSE)
         glfw.set_window_close_callback(self.handle,
                                        lambda w: glfw.destroy_window(self.handle) and Looper.mainLooper().shutdown())
 
         wPos.observe(lambda x: self.performMove(x[0], x[1]))
-        self.wVisible = wVisible
         wVisible.observe(lambda v: self.performShow() if v else self.performHide())
         stayOnTop.observe(lambda v: self.performStayOnTop() if v else self.cancelStayOnTop())
 
@@ -33,19 +32,19 @@ class GlfwWindow(Window):
         glfw.set_window_pos(self.handle, x, y)
 
     def performResize(self, ww: int, wh: int):
-        self.ww = ww
-        self.wh = wh
+        self.width = ww
+        self.height = wh
         if self.handle is None:
             return
 
         self.handler.post(self.__doResize)
 
         for v in self.views:
-            v.onResize(self.ww, self.wh)
+            v.onResize(self.width, self.height)
 
     def __doResize(self):
-        glViewport(0, 0, self.ww, self.wh)
-        glfw.set_window_size(self.handle, self.ww, self.wh)
+        glViewport(0, 0, self.width, self.height)
+        glfw.set_window_size(self.handle, self.width, self.height)
 
     def performShow(self):
         if self.handle is None:
