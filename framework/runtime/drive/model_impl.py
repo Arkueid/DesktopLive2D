@@ -1,4 +1,4 @@
-from framework.runtime.core.model import Model
+from framework.runtime.core.model.model import Model
 from framework.utils.model_json import ModelJson
 from live2d.v3.params import StandardParams
 

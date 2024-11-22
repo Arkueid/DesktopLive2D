@@ -5,7 +5,7 @@ from framework.constant import Live2DVersion
 from framework.constant.waifu import DefaultWaifu
 from framework.live_data.live_data import LiveData
 from framework.runtime.core.kizuna.waifu import Waifu
-from framework.runtime.core.model_info import ModelInfo
+from framework.runtime.core.model.model_info import ModelInfo
 
 
 # LiveData change --> UI
@@ -49,6 +49,27 @@ class ConfigMeta:
 
         self.jsonPath = None
 
+    @property
+    def json(self):
+        d = dict()
+        for i in self.__dict__:
+            if i == "jsonPath":
+                continue
+
+            if i == "modelInfo":
+                mf = self.modelInfo.value
+                d[i] = {
+                    "name": mf.name,
+                    "version": mf.version.value,
+                    "jsonPath": mf.jsonPath
+                }
+            elif i == "waifu":
+                d[i] = self.waifu.value.home
+                self.waifu.value.save()
+            else:
+                d[i] = self.__dict__[i].value
+        return d
+
 
 class Configuration(ConfigMeta):
 
@@ -80,22 +101,5 @@ class Configuration(ConfigMeta):
             p = self.jsonPath
         else:
             p = jsonPath
-        d = dict()
         with open(p, 'w', encoding='utf-8') as f:
-            for i in self.__dict__:
-                if i == "jsonPath":
-                    continue
-
-                if i == "modelInfo":
-                    mf = self.modelInfo.value
-                    d[i] = {
-                        "name": mf.name,
-                        "version": mf.version.value,
-                        "jsonPath": mf.jsonPath
-                    }
-                elif i == "waifu":
-                    d[i] = self.waifu.value.home
-                    self.waifu.value.save()
-                else:
-                    d[i] = self.__dict__[i].value
-            json.dump(d, f, ensure_ascii=False, indent=4)
+            json.dump(self.json, f, ensure_ascii=False, indent=4)

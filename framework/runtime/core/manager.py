@@ -8,7 +8,7 @@ class Manager:
     def __init__(self, name: str):
         with self.__lock:
             if self.__managers.get(name, None) is not None:
-                raise RuntimeError(f"duplicated manager {name}")
+                raise RuntimeError(f"duplicated manager `{name}`")
 
             self.__managers[name] = self
 

@@ -1,6 +1,6 @@
 import glfw
 
-from framework.runtime.core.window_manager import WindowManager
+from framework.runtime.core.window.window_manager import WindowManager
 
 
 class WindowManagerImpl(WindowManager):

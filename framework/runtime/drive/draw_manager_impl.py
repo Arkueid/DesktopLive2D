@@ -3,9 +3,9 @@ import time
 import glfw
 
 import live2d.v3 as l2d_v3
-from framework.runtime.core.draw_manager import DrawManager
+from framework.runtime.core.draw.draw_manager import DrawManager
 from framework.runtime.core.manager import Manager
-from framework.runtime.core.window_manager import WindowManager
+from framework.runtime.core.window.window_manager import WindowManager
 
 
 class DrawManagerImpl(DrawManager):
@@ -25,6 +25,6 @@ class DrawManagerImpl(DrawManager):
     def clearBuffer(self):
         l2d_v3.clearBuffer()
 
-    def doDraw(self):
+    def postDraw(self):
         glfw.swap_buffers(self.window)
         time.sleep(1 / self.fps.value)  # 60 帧

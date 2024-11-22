@@ -2,7 +2,7 @@
     "modelInfo": {
         "name": "nn",
         "version": 3,
-        "jsonPath": "./Resources/v3/nn/nn.model3.json"
+        "jsonPath": "./Resources\\v3\\nn\\nn.model3.json"
     },
     "resourceDir": "./Resources",
     "motionInterval": 10,
@@ -22,8 +22,8 @@
         300
     ],
     "windowPos": [
-        120,
-        544
+        164,
+        549
     ],
     "fps": 30,
     "iconPath": null,

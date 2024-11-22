@@ -2,7 +2,7 @@ import sys
 
 from PySide6.QtWidgets import QMainWindow, QApplication
 
-from framework.runtime.drive.window.gal_dialog_qt import GalDialog
+from temp.gal_dialog_qt import GalDialog
 
 
 class MainApp(QMainWindow):

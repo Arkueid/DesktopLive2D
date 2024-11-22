@@ -51,7 +51,7 @@ class Looper:
 
     @staticmethod
     def mainLooper():
-        return Looper.getLooper("main")
+        return Looper.getLooper("Main")
 
     @staticmethod
     def loopers():

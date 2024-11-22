@@ -3,14 +3,14 @@ from OpenGL.raw.GL.VERSION.GL_1_0 import glViewport
 
 from framework.handler.handler import Handler
 from framework.live_data.live_data import LiveData
-from framework.ui.window import Window
+from framework.runtime.core.window.window import Window
 from framework.handler.looper import Looper
 
 
 class GlfwWindow(Window):
     def __init__(self, wSize: LiveData, wPos: LiveData, wVisible: LiveData, stayOnTop: LiveData):
         super().__init__("scene")
-        self.handler = Handler(Looper.mainLooper())
+        self.__mainHandler = Handler(Looper.mainLooper())
         wSize.observe(lambda x: self.performResize(x[0], x[1]))
 
         # 透明窗体支持
@@ -19,7 +19,7 @@ class GlfwWindow(Window):
         glfw.make_context_current(self.handle)
         glfw.set_window_attrib(self.handle, glfw.DECORATED, glfw.FALSE)
         glfw.set_window_close_callback(self.handle,
-                                       lambda w: glfw.destroy_window(self.handle) and Looper.mainLooper().shutdown())
+                                       lambda w: Looper.mainLooper().shutdown())
 
         wPos.observe(lambda x: self.performMove(x[0], x[1]))
         wVisible.observe(lambda v: self.performShow() if v else self.performHide())
@@ -37,7 +37,7 @@ class GlfwWindow(Window):
         if self.handle is None:
             return
 
-        self.handler.post(self.__doResize)
+        self.__mainHandler.post(self.__doResize)
 
         for v in self.views:
             v.onResize(self.width, self.height)

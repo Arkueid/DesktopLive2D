@@ -1,15 +1,16 @@
 from typing import Callable
 
-from framework.runtime.core.draw_manager import DrawManager
-from framework.runtime.core.input_manager import InputManager
+from framework.runtime.core.draw.draw_manager import DrawManager
+from framework.runtime.core.input.input_manager import InputManager
 from framework.handler.looper import Looper
 from framework.utils import log
 
 
 class MainLooper(Looper):
+    name = "Main"
 
     def __init__(self):
-        super().__init__("main", True)
+        super().__init__(self.name, True)
         self.shouldExit = False
 
     def start(self,
@@ -29,14 +30,14 @@ class MainLooper(Looper):
             beforeStart()
 
         while not self.shouldExit:
-            dm.beforeDraw()
+            dm.update()
             im.processInput()
 
             self.handleMessages()
 
             dm.clearBuffer()
-            dm.onDraw()
             dm.doDraw()
+            dm.postDraw()
 
         if afterEnd:
             afterEnd()
