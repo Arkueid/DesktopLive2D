@@ -3,19 +3,18 @@ import time
 
 from framework.constant import Mouse
 from framework.live_data.live_data import LiveData
-from framework.runtime.core.draw.draw_manager import DrawManager
-from framework.runtime.core.input.input_manager import InputManager
+from framework.runtime.core.draw_manager import DrawManager
+from framework.runtime.core.input_manager import InputManager
 from framework.runtime.core.kizuna.kizuna import Kizuna
-from framework.runtime.core.model.model import Model
-from framework.runtime.core.model.model_manager import ModelManager
-from framework.runtime.core.model.model_scene import ModelScene
+from framework.runtime.core.model import Model
+from framework.runtime.core.model_manager import ModelManager
 from framework.runtime.core.sound_manager import SoundManager
 from framework.runtime.core.text_manager import TextManager
-from framework.runtime.core.window.window import Window
-from framework.runtime.view import View
+from framework.ui.window import Window
+from framework.ui.view import View
 
 
-class ModelView(View, ModelScene):
+class Scene(View):
 
     def __init__(
             self,

@@ -6,8 +6,8 @@ from framework.runtime.core.kizuna.kizuna import Kizuna
 from framework.runtime.core.kizuna.moment import Moment
 from framework.runtime.drive.kizuna import qianfan_token
 from framework.runtime.drive.kizuna.qianfan import Qianfan
-from framework.runtime.drive.looper.looper_impl_tk import TkLooper
-from framework.runtime.drive.window.kizuna_link_tk import TkKizunaLink
+from framework.runtime.drive.looper.looper_impl_qt import QtLooper
+from framework.runtime.drive.window.kizuna_link import KizunaLink
 from framework.utils import log
 
 
@@ -20,18 +20,18 @@ class KizunaImpl(Kizuna):
         self.anchorW = None
         self.anchorX = None
         self.qianfan: Qianfan | None = None
-        self.__tkHandler: Handler | None = None
-        self.__link: TkKizunaLink | None = None
+        self.__qtHandler: Handler | None = None
+        self.__link: KizunaLink | None = None
 
         self.popupX = None
         self.popupY = None
 
     def doInitialize(self, wPos: LiveData, wSize: LiveData):
-        self.__tkHandler = Handler(Looper.getLooper(TkLooper.name))
-        self.__tkHandler.handle = self.__setLink
+        self.__qtHandler = Handler(Looper.getLooper(QtLooper.name))
+        self.__qtHandler.handle = self.__setLink
         msg = Message.obtain()
         msg.data = self.receiver
-        self.__tkHandler.post(msg)
+        self.__qtHandler.post(msg)
 
         self.qianfan = Qianfan(
             qianfan_token.API_KEY,
@@ -52,7 +52,7 @@ class KizunaImpl(Kizuna):
 
     def prepare(self):
         # 确保在 qt 线程中启动
-        self.__tkHandler.post(
+        self.__qtHandler.post(
             lambda: self.__link.activate_from_thread(self.anchorX, self.anchorY, self.anchorW, self.anchorH))
 
     def beforeTell(self, words: str) -> str:
@@ -81,15 +81,14 @@ class KizunaImpl(Kizuna):
         msg = self.qianfan.chat(
             chara_settings + context
         )
-        log.Info(f"[{waifu.name}@kizuna] {msg}")
+        log.Info(f"[Kizuna@{waifu.name}] {msg}")
         return msg
 
     def onReaction(self, return_words: str):
         # live data trigger
         self.words.value = return_words
         # 处理完毕，可以继续输入
-        self.__tkHandler.post(lambda: self.__link.enable())
+        self.__qtHandler.post(lambda: self.__link.enable())
 
     def doSuspend(self):
-        # self.__tkHandler.post(lambda: Looper.getLooper(TkLooper.name).shutdown())
-        pass
+        self.__qtHandler.post(lambda: Looper.getLooper(QtLooper.name).shutdown())

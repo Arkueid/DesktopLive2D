@@ -2,7 +2,7 @@ from abc import abstractmethod, ABC
 
 from framework.live_data.live_data import LiveData
 from framework.runtime.core.manager import Manager
-from framework.runtime.core.draw.drawable import Drawable
+from framework.ui.drawable import Drawable
 
 
 class DrawManager(Manager, ABC):
@@ -34,17 +34,14 @@ class DrawManager(Manager, ABC):
         # not thread safe
         self.__drawables.append(d)
 
-    def update(self):
-        """更新参数"""
+    def beforeDraw(self):
         for d in self.__drawables:
             d.onUpdate()
 
-    def doDraw(self):
-        """绘制"""
+    def onDraw(self):
         for d in self.__drawables:
             d.onDraw()
 
     @abstractmethod
-    def postDraw(self):
-        """刷新缓冲区，提醒窗口更新……"""
+    def doDraw(self):
         pass

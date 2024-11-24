@@ -3,12 +3,14 @@ from abc import ABC, abstractmethod
 
 import framework.constant as constants
 from framework.constant import Live2DVersion
+from framework.handler.handler import Handler
 from framework.handler.looper import Looper
+from framework.handler.message import Message
 from framework.live_data.live_data import LiveData
 from framework.runtime.core.manager import Manager
-from framework.runtime.core.model.model import Model
-from framework.runtime.core.model.model_info import ModelInfo
-from framework.runtime.core.model.model_scene import ModelScene
+from framework.runtime.core.model import Model
+from framework.runtime.core.model_info import ModelInfo
+from framework.runtime.drive.looper.looper_impl_qt import QtLooper
 
 
 def find_model_dir(version: Live2DVersion, path: str) -> list[ModelInfo]:
@@ -53,7 +55,7 @@ class ModelManager(Manager, ABC):
     def currentModel(self):
         return self.__currentModel
 
-    def setScene(self, scene : ModelScene):
+    def setScene(self, scene):
         self.__scene = scene
 
     def startMotion(self, group, no, priority):
@@ -70,9 +72,8 @@ class ModelManager(Manager, ABC):
         self.__findModels()
 
         modelInfo.observe(self.changeModel)
-        modelInfo.observeOn(Looper.mainLooper())
-        # handler = Handler(Looper.getLooper(QtLooper.name))
-        # handler.post(Message.obtain())
+        handler = Handler(Looper.getLooper(QtLooper.name))
+        handler.post(Message.obtain())
 
     @abstractmethod
     def doInitialize(self):

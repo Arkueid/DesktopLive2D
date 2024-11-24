@@ -1,6 +1,6 @@
 import os.path
 
-from pygame import mixer
+import pygame.mixer
 
 from framework.runtime.core.sound_manager import SoundManager
 
@@ -17,23 +17,23 @@ class SoundManagerImpl(SoundManager):
         self.wavHandler = WavHandler()
 
     def doInitialize(self):
-        mixer.init()
+        pygame.mixer.init()
 
     def play(self, audioPath: str) -> None:
         if not self.isFinished():
             self.stop()
 
-        if os.path.isfile(audioPath):
-            mixer.music.load(audioPath)
-            mixer.music.play()
+        if os.path.exists(audioPath):
+            pygame.mixer.music.load(audioPath)
+            pygame.mixer.music.play()
             log.Info(f"[SoundManager] play: {audioPath}")
             self.wavHandler.Start(audioPath)
 
     def isFinished(self) -> bool:
-        return not mixer.music.get_busy()
+        return not pygame.mixer.music.get_busy()
 
     def stop(self):
-        mixer.music.stop()
+        pygame.mixer.music.stop()
 
     def setVolume(self, v: int):
-        mixer.music.set_volume(v / 100)
+        pygame.mixer.music.set_volume(v / 100)

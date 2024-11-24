@@ -4,7 +4,7 @@ from framework.handler.looper import Looper
 from framework.live_data.live_data import LiveData
 from framework.runtime.core.kizuna.waifu import Waifu
 from framework.runtime.drive.kizuna.kizuna_impl import KizunaImpl
-from temp.looper_impl_qt import QtLooper
+from framework.runtime.drive.looper.looper_impl_qt import QtLooper
 
 if __name__ == '__main__':
     # 伪造 main looper

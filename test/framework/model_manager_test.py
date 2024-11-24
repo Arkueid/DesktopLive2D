@@ -1,4 +1,4 @@
-from framework.runtime.core.model.model_manager import ModelManager
+from framework.runtime.core.model_manager import ModelManager
 
 if __name__ == '__main__':
     modelManager = ModelManager()

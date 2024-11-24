@@ -32,23 +32,6 @@
                     "Text": "下午好！"
                 }
             ],
-            "Evening": [
-                {
-                    "File": "",
-                    "Sound": "sounds/nn.evening_0.wav",
-                    "Text": "晚上好！"
-                },
-                {
-                    "File": "motions/Hiyori_m01.motion3.json",
-                    "Sound": "sounds/nen009_105.wav",
-                    "Text": "今天非常开心，谢谢。"
-                },
-                {
-                    "File": "motions/Hiyori_m01.motion3.json",
-                    "Sound": "sounds/nen101_012.wav",
-                    "Text": "今天真的很累……"
-                }
-            ],
             "Idle": [
                 {
                     "File": "motions/Hiyori_m03.motion3.json",
@@ -224,6 +207,23 @@
                     "File": "",
                     "Sound": "sounds/nn.tap_head_0.wav",
                     "Text": "诶？！头发上有东西吗？"
+                }
+            ],
+            "Evening12": [
+                {
+                    "File": "",
+                    "Sound": "sounds/nn.evening_0.wav",
+                    "Text": "晚上好！"
+                },
+                {
+                    "File": "motions/Hiyori_m01.motion3.json",
+                    "Sound": "sounds/nen009_105.wav",
+                    "Text": "今天非常开心，谢谢。"
+                },
+                {
+                    "File": "motions/Hiyori_m01.motion3.json",
+                    "Sound": "sounds/nen101_012.wav",
+                    "Text": "今天真的很累……"
                 }
             ]
         },

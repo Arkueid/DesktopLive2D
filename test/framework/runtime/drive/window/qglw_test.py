@@ -4,7 +4,7 @@ import time
 from PySide6.QtWidgets import QApplication
 
 import live2d.v3 as live2d
-from temp.qglw import QGLW
+from framework.runtime.drive.window.qglw import QGLW
 
 
 def task(win):

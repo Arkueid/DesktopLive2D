@@ -1,9 +1,9 @@
 import glfw
 
 from framework.constant import Mouse
-from framework.runtime.core.input.input_manager import InputManager, MouseEvent
+from framework.runtime.core.input_manager import InputManager, MouseEvent
 from framework.runtime.core.manager import Manager
-from framework.runtime.core.window.window_manager import WindowManager
+from framework.runtime.core.window_manager import WindowManager
 
 
 class InputManagerImpl(InputManager):

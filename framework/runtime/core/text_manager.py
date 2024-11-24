@@ -16,7 +16,7 @@ class TextManager(Manager, ABC):
         pass
 
     @abstractmethod
-    def popup(self, chara: str, text: str, delay: float = 2, lock=False):
+    def popup(self, chara: str, text: str, delay: float = 2):
         pass
 
     @abstractmethod

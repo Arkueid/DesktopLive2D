@@ -6,7 +6,7 @@ from framework.runtime.core.manager import Manager
 from framework.handler.handler import Handler
 from framework.handler.message import Message
 from framework.handler.looper import Looper
-from framework.runtime.core.input.clickable import Clickable
+from framework.ui.clickable import Clickable
 
 
 class MouseEvent:
@@ -26,7 +26,7 @@ class InputManager(Manager, ABC):
 
     def __init__(self):
         super().__init__(self.name)
-        self.__rootClickable: Clickable | None = None
+        self.__clickableStack: list[Clickable] = list()
         self.__handler: Handler | None = None
         self.wPos: LiveData | None = None
         self.clickEnable: LiveData | None = None
@@ -70,23 +70,27 @@ class InputManager(Manager, ABC):
         del e
 
     def performPress(self, mouseEvent):
-        if self.__rootClickable:
-            self.__rootClickable.onPressed(mouseEvent.button, mouseEvent.x, mouseEvent.y)
+        for c in self.__clickableStack:
+            if c.onPressed(mouseEvent.button, mouseEvent.x, mouseEvent.y):
+                break
 
     def performRelease(self, mouseEvent):
-        if self.__rootClickable:
-            self.__rootClickable.onReleased(mouseEvent.button, mouseEvent.x, mouseEvent.y)
+        for c in self.__clickableStack:
+            if c.onReleased(mouseEvent.button, mouseEvent.x, mouseEvent.y):
+                break
 
     def performDoubleClick(self, mouseEvent):
-        if self.__rootClickable:
-            self.__rootClickable.onDoubleClicked(mouseEvent.button, mouseEvent.x, mouseEvent.y)
+        for c in self.__clickableStack:
+            if c.onDoubleClicked(mouseEvent.button, mouseEvent.x, mouseEvent.y):
+                break
 
     def performMove(self, mouseEvent):
-        if self.__rootClickable:
-            self.__rootClickable.onMoved(mouseEvent.x, mouseEvent.y)
+        for c in self.__clickableStack:
+            if c.onMoved(mouseEvent.x, mouseEvent.y):
+                break
 
     def pushClickable(self, c: Clickable):
-        self.__rootClickable = c
+        self.__clickableStack.insert(0, c)
 
     @abstractmethod
     def makeTransparent(self, value):

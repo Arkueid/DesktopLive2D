@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 from framework.runtime.core.manager import Manager
-from framework.runtime.core.window.window import Window
+from framework.ui.window import Window
 
 
 class WindowManager(Manager, ABC):

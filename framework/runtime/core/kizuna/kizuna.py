@@ -33,7 +33,7 @@ class Kizuna(Manager, ABC):
     def __init__(self):
         super().__init__(self.name)
         # setup mana source first ~
-        self.__looper = Looper(self.name)
+        self.__looper = Looper("kizuna")
         self.__kHandler = Handler(self.__looper)
         self.__mainHandler = Handler(Looper.mainLooper())
 
@@ -54,11 +54,13 @@ class Kizuna(Manager, ABC):
         self.ruleBreak(waifu.value)
 
         tm = Manager.getManager(TextManager.name)
-        self.words.observe(lambda v: tm.popup(self.currentWaifu.value.name, v, lock=True), False)
+        self.words.observe(lambda v: tm.popup(self.currentWaifu.value.name, v), False)
+
 
     @property
     def receiver(self):
         return self.__receiver
+
 
     def recall(self, mid):
         if self.currentWaifu.value is None:
@@ -73,7 +75,6 @@ class Kizuna(Manager, ABC):
     def ruleBreak(self, waifu):
         """create a connection ignoring the rule the real world"""
         self.currentWaifu.value = self.waifus[waifu.name]
-        self.currentWaifu.value.recall(self.currentWaifu.value.mids[0])
 
     def tell(self):
         self.prepare()
