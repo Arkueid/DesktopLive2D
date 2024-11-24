@@ -15,5 +15,9 @@ access_token.*.json
 
 .venv
 x86-venv
+
+dist/
+build/
+
 /Resources/v3/草莓兔兔 试用/
 /framework/runtime/drive/kizuna/qianfan_token.py

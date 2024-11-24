@@ -1,0 +1,1 @@
+pyinstaller -D main.py --add-binary=.\x86-venv\Lib\site-packages\glfw\glfw3.dll:. --hidden-import "live2d.v2.params" --hidden-import "live2d.v3.params"

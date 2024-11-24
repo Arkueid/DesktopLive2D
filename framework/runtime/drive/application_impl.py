@@ -5,7 +5,7 @@ from framework.runtime.core.input.input_manager import InputManager
 from framework.runtime.core.kizuna.kizuna import Kizuna
 from framework.runtime.core.kizuna.waifu import Waifu
 from framework.runtime.core.model.model_manager import ModelManager
-from framework.runtime.core.setting_manager import SettingManager
+from framework.runtime.core.setting.setting_manager import SettingManager
 from framework.runtime.core.sound_manager import SoundManager
 from framework.runtime.core.text_manager import TextManager
 from framework.runtime.core.window.window_manager import WindowManager
@@ -121,7 +121,7 @@ class ApplicationImpl(Application):
         self.mainLooper.start(self.im, self.dm, self.beforeStart, self.afterEnd)
 
         # 主线程
-        self.tkLooper.loop()
+        self.tkLooper.loop(self.appConfig)
 
         self.exit()
 

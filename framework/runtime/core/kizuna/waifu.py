@@ -170,7 +170,7 @@ class Waifu:
         with open(info_path, "r", encoding="utf-8") as f:
             d = json.load(f)
             obj = cls.create(d["name"], d["desc"], d["greeting"], homeDir)
-            obj.cMid = d.get("cMid", )
+            obj.cMid = d.get("cMid", obj.cMid)
 
         return obj
 

@@ -3,7 +3,7 @@
     "modelInfo": {
         "name": "nn",
         "version": 3,
-        "jsonPath": "./resources\\v3/nn\\nn.model3.json"
+        "jsonPath": "./resources\\v3\\nn\\nn.model3.json"
     },
     "motionInterval": 10,
     "drawPos": [

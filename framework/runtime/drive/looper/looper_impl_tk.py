@@ -3,6 +3,7 @@ import tkinter as tk
 from framework.runtime.drive.window.gal_dialog_tk import TkGalDialog
 from framework.handler.looper import Looper
 from framework.runtime.drive.window.kizuna_link_tk import TkKizunaLink
+from framework.runtime.drive.window.settings.settings import Settings
 from framework.utils import log
 
 
@@ -29,7 +30,7 @@ class TkLooper(Looper):
 
         self.root.after(100, self.handleMessage)
 
-    def loop(self, *args, **kwargs):
+    def loop(self, config):
         self.root = tk.Tk()
         root = self.root
         root.withdraw()
@@ -51,6 +52,14 @@ class TkLooper(Looper):
         tm_init_msg.recycle()
 
         log.Info("[TkLooper] dialog init")
+
+        # 等待 setting manager 初始化
+        sm_init_msg = self.mq.getOrBlock()
+        settings = Settings(root, config)
+        sm_init_msg.handle(settings)
+        sm_init_msg.recycle()
+
+        log.Info("[TkLooper] settings init")
 
         root.after(100, self.handleMessage)
 
