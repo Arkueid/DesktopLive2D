@@ -73,7 +73,6 @@ class Kizuna(Manager, ABC):
     def ruleBreak(self, waifu):
         """create a connection ignoring the rule the real world"""
         self.currentWaifu.value = self.waifus[waifu.name]
-        self.currentWaifu.value.recall(self.currentWaifu.value.mids[0])
 
     def tell(self):
         self.prepare()

@@ -4,7 +4,7 @@ from PySide6.QtWidgets import QApplication
 
 from framework.runtime.app_config import Configuration
 from framework.runtime.core.kizuna.waifu import Waifu
-from framework.runtime.drive.model_manager_impl import ModelManagerImpl
+from framework.runtime.drive.model.model_manager_impl import ModelManagerImpl
 from temp.settings import Settings
 
 if __name__ == '__main__':

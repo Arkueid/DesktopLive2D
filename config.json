@@ -1,10 +1,10 @@
 {
+    "resourceDir": "./resources",
     "modelInfo": {
         "name": "nn",
         "version": 3,
-        "jsonPath": "./Resources\\v3\\nn\\nn.model3.json"
+        "jsonPath": "./resources\\v3/nn\\nn.model3.json"
     },
-    "resourceDir": "./Resources",
     "motionInterval": 10,
     "drawPos": [
         0,
@@ -12,7 +12,7 @@
     ],
     "lipSyncN": 1.0,
     "scale": 1.0,
-    "clickTransparent": false,
+    "clickThrough": false,
     "clickEnable": true,
     "trackEnable": true,
     "stayOnTop": false,
@@ -22,11 +22,11 @@
         300
     ],
     "windowPos": [
-        164,
-        549
+        776,
+        423
     ],
     "fps": 30,
-    "iconPath": null,
+    "iconPath": "./Resources\\tray.ico",
     "volume": 100,
     "waifu": "waifus\\户山香澄"
 }

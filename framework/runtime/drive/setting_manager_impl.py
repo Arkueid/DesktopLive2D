@@ -1,19 +1,11 @@
-import os.path
-
 from PIL import Image
 from pystray import MenuItem, Menu, Icon
 
 from framework.constant.app import APP_NAME
 from framework.live_data.live_data import LiveData
-from framework.runtime.core.setting.setting_manager import SettingManager, SystrayOption
+from framework.runtime.app_config import Configuration
+from framework.runtime.core.setting_manager import SettingManager, SystrayOption
 from framework.utils import log
-
-icon_path = os.path.join("./Resources", "tray.ico")
-
-
-def create_image():
-    image = Image.open(icon_path)
-    return image
 
 
 class CheckableData:
@@ -35,8 +27,8 @@ class SettingManagerImpl(SettingManager):
     def setSetting(self, setting):
         self.setting = setting
 
-    def doInitialize(self):
-        image = create_image()
+    def doInitialize(self, config: Configuration):
+        image = Image.open(config.iconPath.value)
         self.icon = Icon(
             APP_NAME,
             image,

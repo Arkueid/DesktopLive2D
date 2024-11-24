@@ -3,12 +3,12 @@ from framework.utils.model_json import ModelJson
 
 
 class ModelInfo:
+    mm = None
 
     def __init__(self, name: str, jsonPath: str, version: Live2DVersion):
         self.name = name
         self.jsonPath = jsonPath
         self.version = version
-        self.mm = None
         self.__modelJson = None
 
     def __str__(self):

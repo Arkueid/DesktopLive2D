@@ -5,7 +5,7 @@ from framework.runtime.core.input.input_manager import InputManager
 from framework.runtime.core.kizuna.kizuna import Kizuna
 from framework.runtime.core.kizuna.waifu import Waifu
 from framework.runtime.core.model.model_manager import ModelManager
-from framework.runtime.core.setting.setting_manager import SettingManager
+from framework.runtime.core.setting_manager import SettingManager
 from framework.runtime.core.sound_manager import SoundManager
 from framework.runtime.core.text_manager import TextManager
 from framework.runtime.core.window.window_manager import WindowManager
@@ -13,7 +13,7 @@ from framework.runtime.drive.draw_manager_impl import DrawManagerImpl
 from framework.runtime.drive.input_manager_impl import InputManagerImpl
 from framework.runtime.drive.kizuna.kizuna_impl import KizunaImpl
 from framework.runtime.drive.looper.looper_impl_tk import TkLooper
-from framework.runtime.drive.model_manager_impl import ModelManagerImpl
+from framework.runtime.drive.model.model_manager_impl import ModelManagerImpl
 from framework.runtime.drive.setting_manager_impl import SettingManagerImpl
 from framework.runtime.drive.sound_manager_impl import SoundManagerImpl
 from framework.runtime.drive.text_manager_impl import TextManagerImpl
@@ -98,19 +98,13 @@ class ApplicationImpl(Application):
         # 模型文件夹不能更改，传固定值
         self.mm.initialize(self.appConfig.resourceDir.value, self.appConfig.modelInfo)
         # 依赖 mm
-        self.stm.initialize(
-            self.appConfig.clickTransparent,
-            self.appConfig.clickEnable,
-            self.appConfig.trackEnable,
-            self.appConfig.stayOnTop,
-            self.appConfig.visible
-        )
+        self.stm.initialize(self.appConfig)
 
         self.im.initialize(
             self.mainLooper,
             self.appConfig.windowPos,
             self.appConfig.clickEnable,
-            self.appConfig.clickTransparent,
+            self.appConfig.clickThrough,
             self.appConfig.trackEnable,
         )
 

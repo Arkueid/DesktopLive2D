@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from enum import Enum
 
 from framework.live_data.live_data import LiveData
+from framework.runtime.app_config import Configuration
 from framework.runtime.core.manager import Manager
 from framework.handler.handler import Handler
 from framework.handler.message import Message
@@ -32,24 +33,17 @@ class SettingManager(Manager, ABC):
         self.clickEnable: LiveData | None = None
         self.clickTransparent: LiveData | None = None
 
-    def initialize(
-            self,
-            clickTransparent: LiveData,
-            clickEnable: LiveData,
-            trackEnable: LiveData,
-            stayOnTop: LiveData,
-            visible: LiveData,
-    ):
-        self.clickTransparent = clickTransparent
-        self.clickEnable = clickEnable
-        self.trackEnable = trackEnable
-        self.stayOnTop = stayOnTop
-        self.visible = visible
+    def initialize(self, config: Configuration):
+        self.clickTransparent = config.clickThrough
+        self.clickEnable = config.clickEnable
+        self.trackEnable = config.trackEnable
+        self.stayOnTop = config.stayOnTop
+        self.visible = config.visible
 
-        self.doInitialize()
+        self.doInitialize(config)
 
     @abstractmethod
-    def doInitialize(self):
+    def doInitialize(self, config: Configuration):
         pass
 
     @staticmethod

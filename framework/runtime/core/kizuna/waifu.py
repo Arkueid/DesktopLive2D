@@ -36,6 +36,7 @@ class Waifu:
                 f"\tdesc={self.desc},\n"
                 f"\tgreeting={self.greeting},\n"
                 f"\tmoments={[k for k in self.moments]}\n"
+                f"\tcMid={self.cMid}"
                 f")")
 
     @property
@@ -87,7 +88,7 @@ class Waifu:
         init_mm = os.path.exists(mm_dir)
         if not init_mm:
             os.makedirs(mm_dir)
-            obj.newMoment()
+            obj.cMid = obj.newMoment()
 
         if init_home and init_mm:
             return False, mm_dir
@@ -124,6 +125,7 @@ class Waifu:
         with open(info_path, "r", encoding="utf-8") as f:
             d = json.load(f)
             obj = Waifu.__create(d["name"], d["desc"], d["greeting"], homeDir)
+            obj.cMid = d.get("cMid", obj.cMid)
         return obj
 
     @classmethod
@@ -168,6 +170,7 @@ class Waifu:
         with open(info_path, "r", encoding="utf-8") as f:
             d = json.load(f)
             obj = cls.create(d["name"], d["desc"], d["greeting"], homeDir)
+            obj.cMid = d.get("cMid", )
 
         return obj
 
@@ -176,6 +179,7 @@ class Waifu:
             "name": self.name,
             "desc": self.desc,
             "greeting": self.greeting,
+            "cMid": self.cMid,
         }
         if not os.path.exists(self.home):
             os.makedirs(self.home)
@@ -185,7 +189,7 @@ class Waifu:
         for mm in self.moments.values():
             mm.save()
 
-    def newMoment(self):
+    def newMoment(self) -> str:
         mm = Moment.create(self.home)
         self.moments[mm.mid] = mm
         return mm.mid

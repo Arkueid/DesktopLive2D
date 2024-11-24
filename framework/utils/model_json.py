@@ -21,7 +21,7 @@ class __Keys3(Keys):
     TEXT = "Text"
 
 
-KEY3 = __Keys3()
+KEYS3 = __Keys3()
 
 
 class __Keys2(Keys):
@@ -32,7 +32,7 @@ class __Keys2(Keys):
     TEXT = "sound"
 
 
-KEY2 = __Keys2()
+KEYS2 = __Keys2()
 
 
 class VersionedJson:
@@ -40,9 +40,9 @@ class VersionedJson:
     def __init__(self, version: Live2DVersion):
         self.__version = version
         if version == Live2DVersion.V3:
-            self.__keys = KEY3
+            self.__keys = KEYS3
         elif version == Live2DVersion.V2:
-            self.__keys = KEY2
+            self.__keys = KEYS2
         else:
             raise RuntimeError(f"unknown live2d version {version}")
 
@@ -110,6 +110,9 @@ class MotionGroup(VersionedJson):
     def remove(self, motion: Motion):
         self.__meta.remove(motion.meta())
 
+    def pop(self, no: int):
+        self.__meta.pop(no)
+
     def meta(self):
         return self.__meta
 
@@ -156,7 +159,7 @@ class ModelJson(VersionedJson):
         self.__meta = d
 
     def motion_groups(self) -> MotionGroups:
-        if self.keys == KEY2:
+        if self.keys == KEYS2:
             return MotionGroups(self.version, self.__meta[self.keys.MOTIONS])
         else:
             return MotionGroups(self.version,

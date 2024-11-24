@@ -5,7 +5,7 @@ from live2d.v3.params import StandardParams
 
 # TODO: ModelImpl 内部根据模型版本的不同，分别使用不同的加载库
 
-class ModelImpl(Model):
+class ModelV3Impl(Model):
 
     def __init__(self, modelJson: ModelJson, model):
         super().__init__(modelJson)

@@ -12,11 +12,11 @@ from framework.runtime.core.model.model_info import ModelInfo
 # change by UI --> LiveData --> saved file
 class ConfigMeta:
     def __init__(self):
+        self.resourceDir = LiveData("./resources")
         # model manager
         self.modelInfo = LiveData(ModelInfo("nn",
-                                            "./Resources/v3/nn/nn.model3.json",
+                                            os.path.join(self.resourceDir.value, "v3/nn", "nn.model3.json"),
                                             Live2DVersion.V3))
-        self.resourceDir = LiveData("./Resources")
 
         # scene
         self.motionInterval = LiveData(10)  # 小于0 禁用，单位秒
@@ -25,8 +25,8 @@ class ConfigMeta:
         self.scale = LiveData(1.0)  # >0
 
         # input manager
-        self.clickTransparent = LiveData(False)
-        self.clickEnable = LiveData(False)
+        self.clickThrough = LiveData(False)
+        self.clickEnable = LiveData(True)
         self.trackEnable = LiveData(True)
 
         # window manager
@@ -38,8 +38,7 @@ class ConfigMeta:
         # draw manager
         self.fps = LiveData(30)
 
-        # TODO: systray manager
-        self.iconPath = LiveData(None)
+        self.iconPath = LiveData(str(os.path.join("./Resources", "tray.ico")))
 
         # sound manager
         self.volume = LiveData(100)  # 0 - 100

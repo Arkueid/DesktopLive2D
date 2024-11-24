@@ -66,6 +66,10 @@ class RangeLiveData(LiveData):
 
     @value.setter
     def value(self, v):
+        if v > self.range[1]:
+            v = self.range[1]
+        if v < self.range[0]:
+            v = self.range[0]
         self.liveData.value = v
 
 

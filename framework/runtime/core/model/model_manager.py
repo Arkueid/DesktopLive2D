@@ -53,7 +53,7 @@ class ModelManager(Manager, ABC):
     def currentModel(self):
         return self.__currentModel
 
-    def setScene(self, scene : ModelScene):
+    def setScene(self, scene: ModelScene):
         self.__scene = scene
 
     def startMotion(self, group, no, priority):
@@ -63,6 +63,8 @@ class ModelManager(Manager, ABC):
     def initialize(self, resourceDir: str, modelInfo: LiveData):
         self.doInitialize()
 
+        ModelInfo.mm = self
+
         self.__resourceDir = resourceDir
         if not os.path.exists(resourceDir):
             self.__makeResourceDir(resourceDir)
@@ -71,8 +73,6 @@ class ModelManager(Manager, ABC):
 
         modelInfo.observe(self.changeModel)
         modelInfo.observeOn(Looper.mainLooper())
-        # handler = Handler(Looper.getLooper(QtLooper.name))
-        # handler.post(Message.obtain())
 
     @abstractmethod
     def doInitialize(self):
@@ -104,11 +104,9 @@ class ModelManager(Manager, ABC):
     def changeModel(self, modelInfo: ModelInfo):
         model = self.createModel(modelInfo)
 
-        if self.__scene:  # TODO for test
+        if self.__scene:
             self.__scene.changeModel(model)
 
         if self.__currentModel is not None:
             del self.__currentModel
         self.__currentModel = model
-
-        modelInfo.mm = self
