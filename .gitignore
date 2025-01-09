@@ -18,3 +18,5 @@ access_token.*.json
 /framework/runtime/drive/kizuna/qianfan_token.py
 
 dist
+
+build
