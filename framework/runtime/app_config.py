@@ -5,7 +5,7 @@ from framework.constant import Live2DVersion
 from framework.constant.waifu import DefaultWaifu
 from framework.live_data.live_data import LiveData
 from framework.runtime.core.kizuna.waifu import Waifu
-from framework.runtime.core.model_info import ModelInfo
+from framework.runtime.core.model.model_info import ModelInfo
 
 
 # LiveData change --> UI

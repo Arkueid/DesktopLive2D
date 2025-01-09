@@ -1,8 +1,8 @@
 {
     "modelInfo": {
-        "name": "nn",
+        "name": "Haru",
         "version": 3,
-        "jsonPath": "./Resources\\v3\\nn\\nn.model3.json"
+        "jsonPath": "./Resources\\v3\\Haru\\Haru.model3.json"
     },
     "resourceDir": "./Resources",
     "motionInterval": 10,
@@ -22,8 +22,8 @@
         300
     ],
     "windowPos": [
-        164,
-        549
+        1240,
+        226
     ],
     "fps": 30,
     "iconPath": null,

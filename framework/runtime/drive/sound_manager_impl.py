@@ -4,8 +4,8 @@ import pygame.mixer
 
 from framework.runtime.core.sound_manager import SoundManager
 
-import live2d.utils.log as log
 from live2d.utils.lipsync import WavHandler
+from live2d.utils import log
 
 
 class SoundManagerImpl(SoundManager):

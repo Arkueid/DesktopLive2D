@@ -5,3 +5,5 @@ PyOpenGL~=3.1.7
 requests~=2.32.3
 pystray~=0.19.5
 pillow~=11.0.0
+pyside6
+pyside6-fluent-widgets

@@ -3,6 +3,7 @@ import time
 import glfw
 
 import live2d.v3 as l2d_v3
+import live2d.v2 as l2d_v2
 from framework.runtime.core.draw_manager import DrawManager
 from framework.runtime.core.manager import Manager
 from framework.runtime.core.window_manager import WindowManager
@@ -20,7 +21,7 @@ class DrawManagerImpl(DrawManager):
     def doInitialize(self):
         self.window = Manager.getManager(WindowManager.name).getWindow("scene").handle
         l2d_v3.glewInit()
-        l2d_v3.setGLProperties()
+        l2d_v2.glewInit()
 
     def clearBuffer(self):
         l2d_v3.clearBuffer()

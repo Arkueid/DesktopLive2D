@@ -1,4 +1,5 @@
 import os
+import random
 import time
 
 from framework.constant import Mouse
@@ -6,8 +7,8 @@ from framework.live_data.live_data import LiveData
 from framework.runtime.core.draw_manager import DrawManager
 from framework.runtime.core.input_manager import InputManager
 from framework.runtime.core.kizuna.kizuna import Kizuna
-from framework.runtime.core.model import Model
-from framework.runtime.core.model_manager import ModelManager
+from framework.runtime.core.model.model import Model
+from framework.runtime.core.model.model_manager import ModelManager
 from framework.runtime.core.sound_manager import SoundManager
 from framework.runtime.core.text_manager import TextManager
 from framework.ui.window import Window
@@ -54,8 +55,8 @@ class Scene(View):
             self.kzn = m
 
     def changeModel(self, model: Model):
+        model.init()
         self.model = model
-        self.model.init()
         self.model.Resize(self.ww, self.wh)
 
     def onResize(self, ww: int, wh: int):
@@ -88,7 +89,8 @@ class Scene(View):
 
         if self.lastMotionEndAt > 0 and ct - self.lastMotionEndAt > self.motionInterval.value:
             self.lastMotionEndAt = -1
-            self.model.StartRandomMotion("Idle", 1, self.onMotionStart)
+            group = random.choice(self.model.modelJson.motion_groups().group_names())
+            self.model.StartRandomMotion(group, 1, self.onMotionStart)
 
     def onDraw(self):
         if self.model is None:
@@ -106,11 +108,12 @@ class Scene(View):
     def onMotionStart(self, name: str, nr: int):
         motion = self.model.modelJson.motion_groups().group(name).motion(nr)
         sound = motion.sound()
-        audio_path = os.path.join(self.model.modelJson.src_dir(), sound)
-        self.sm.play(audio_path)
-
+        if sound:
+            audio_path = os.path.join(self.model.modelJson.src_dir(), sound)
+            self.sm.play(audio_path)
         text = motion.text()
-        self.tm.popup("", text, 5)
+        if text:
+            self.tm.popup("", text, 5)
 
     def onReleased(self, button, x: int, y: int) -> bool:
         if self.model is None:

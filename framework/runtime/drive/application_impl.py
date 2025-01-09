@@ -4,7 +4,7 @@ from framework.runtime.core.draw_manager import DrawManager
 from framework.runtime.core.input_manager import InputManager
 from framework.runtime.core.kizuna.kizuna import Kizuna
 from framework.runtime.core.kizuna.waifu import Waifu
-from framework.runtime.core.model_manager import ModelManager
+from framework.runtime.core.model.model_manager import ModelManager
 from framework.runtime.core.sound_manager import SoundManager
 from framework.runtime.core.setting_manager import SettingManager
 from framework.runtime.core.text_manager import TextManager
@@ -14,7 +14,7 @@ from framework.runtime.drive.kizuna.kizuna_impl import KizunaImpl
 from framework.runtime.drive.looper.looper_impl_qt import QtLooper
 from framework.runtime.drive.window.glfw_window import GlfwWindow
 from framework.runtime.drive.input_manager_impl import InputManagerImpl
-from framework.runtime.drive.model_manager_impl import ModelManagerImpl
+from framework.runtime.drive.model.model_manager_impl import ModelManagerImpl
 from framework.runtime.drive.sound_manager_impl import SoundManagerImpl
 from framework.runtime.drive.setting_manager_impl import SettingManagerImpl
 from framework.runtime.drive.text_manager_impl import TextManagerImpl

@@ -1,1 +1,1 @@
-cd %~dp0 && .venv\Scripts\python main.py
+cd %~dp0 && x86-venv\Scripts\python main.py

@@ -1,5 +1,4 @@
 import time
-from ..v3.live2d import logEnable
 
 RESET = "\033[0m"
 RED = "\033[31m"
@@ -12,29 +11,26 @@ WHITE = "\033[37m"
 
 
 def Debug(*args, **kwargs):
-    if logEnable():
-        print(
-            time.strftime(f"{BLUE}[DEBUG  %Y-%m-%d %H:%M:%S]", time.localtime(time.time())),
-            *args, 
-            RESET,
-            **kwargs
-        )
+    print(
+        time.strftime(f"{BLUE}[DEBUG  %Y-%m-%d %H:%M:%S]", time.localtime(time.time())),
+        *args,
+        RESET,
+        **kwargs
+    )
 
 
 def Info(*args, **kwargs):
-    if logEnable():
-        print(
-            time.strftime("[INFO  %Y-%m-%d %H:%M:%S]", time.localtime(time.time())),
-            *args,
-            **kwargs
-        )
+    print(
+        time.strftime("[INFO  %Y-%m-%d %H:%M:%S]", time.localtime(time.time())),
+        *args,
+        **kwargs
+    )
 
 
 def Error(*args, **kwargs):
-    if logEnable():
-        print(
-            time.strftime(f"{RED}[ERROR  %Y-%m-%d %H:%M:%S]", time.localtime(time.time())),
-            *args,
-            RESET,
-            **kwargs
-        )
+    print(
+        time.strftime(f"{RED}[ERROR  %Y-%m-%d %H:%M:%S]", time.localtime(time.time())),
+        *args,
+        RESET,
+        **kwargs
+    )

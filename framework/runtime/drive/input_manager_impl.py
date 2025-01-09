@@ -45,7 +45,8 @@ class InputManagerImpl(InputManager):
         if action == glfw.RELEASE:
             if not self.moved:
                 x, y = glfw.get_cursor_pos(self.handle)
-
+                if self.lastClickAtX is None or self.lastClickAtY is None:
+                    return
                 # 不是 移动窗口的操作 并且 鼠标没有移动过（长按移动视为取消点击）
                 if abs(x - self.lastClickAtX) < 5 and abs(y - self.lastClickAtY) < 5:
                     me = MouseEvent()
